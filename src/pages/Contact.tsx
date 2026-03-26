@@ -121,12 +121,7 @@ export default function Contact() {
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 glass-card p-8 md:p-10">
             <div className="flex items-start justify-between gap-6 mb-6">
-              <div>
-                <h2 className="font-display text-2xl font-semibold mb-2">AI Concierge</h2>
-                <p className="text-muted-foreground">
-                  This is a lightweight “demo robot”. Drag it around anywhere in the box.
-                </p>
-              </div>
+              <div aria-hidden="true" />
               <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
                 <Sparkles className="w-5 h-5 text-primary" />
               </div>
@@ -144,7 +139,7 @@ export default function Contact() {
                 preload="metadata"
                 className="absolute inset-0 w-full h-full object-cover opacity-90 pointer-events-none"
               >
-                <source src="/videos/transparent-inquiry.mp4" type="video/mp4" />
+                <source src="/videos/tech-background.mp4" type="video/mp4" />
               </video>
 
               <div className="absolute -top-20 -left-24 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
@@ -170,18 +165,6 @@ export default function Contact() {
                 className="h-14 w-14"
               />
 
-              <div className="absolute left-5 bottom-5 right-5">
-                <div className="glass-card p-4">
-                  <p className="text-sm font-semibold mb-1">Need to reach us?</p>
-                  <p className="text-xs text-muted-foreground">
-                    Email{" "}
-                    <a href={emailHref} className="text-primary hover:underline">
-                      hello@timesquarellc.com
-                    </a>{" "}
-                    or book a call.
-                  </p>
-                </div>
-              </div>
             </div>
 
             <div className="mt-5 flex flex-col sm:flex-row gap-3">
@@ -190,7 +173,7 @@ export default function Contact() {
                 className="btn-outline-gradient inline-flex items-center justify-center gap-2 flex-1"
               >
                 <Mail size={16} />
-                Email us
+                <span className="sr-only">Email us</span>
               </a>
               <a
                 href={BOOK_CALL_URL}
@@ -199,7 +182,7 @@ export default function Contact() {
                 className="btn-gradient inline-flex items-center justify-center gap-2 flex-1"
               >
                 <Calendar size={16} />
-                Book a Call
+                <span className="sr-only">Book a Call</span>
               </a>
             </div>
           </div>
