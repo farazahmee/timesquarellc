@@ -1,32 +1,10 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { Link } from "react-router-dom";
-import { Mail, MapPin, Linkedin, Calendar } from "lucide-react";
-import emailjs from "@emailjs/browser";
-import { toast } from "@/components/ui/use-toast";
+import { Calendar, Sparkles, Mail, MapPin, Linkedin } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
 
-type ContactFormData = {
-  name: string;
-  email: string;
-  company: string;
-  budget: string;
-  project_type: string;
-  message: string;
-};
-
-const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID ?? "";
-const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID ?? "";
-const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY ?? "";
 const BOOK_CALL_URL = "https://calendar.app.google/meegViXuibrs6Egq7";
-
-const initialForm: ContactFormData = {
-  name: "",
-  email: "",
-  company: "",
-  budget: "",
-  project_type: "",
-  message: "",
-};
+const ROBOT_SIZE_PX = 56; // matches `h-14 w-14`
 
 const faqs = [
   {
@@ -59,63 +37,68 @@ export default function Contact() {
     canonical: "https://timesquarellc.com/contact",
   });
 
-  const [formData, setFormData] = useState<ContactFormData>(initialForm);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [dragging, setDragging] = useState(false);
+  const [pos, setPos] = useState({ x: 28, y: 120 });
+  const dragOffsetRef = useRef({ dx: 0, dy: 0 });
 
-  const handleChange =
-    (field: keyof ContactFormData) =>
-    (
-      event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
-    ) => {
-      setFormData((prev) => ({ ...prev, [field]: event.target.value }));
+  const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n));
+
+  useEffect(() => {
+    // Keep robot inside bounds on resize.
+    const onResize = () => {
+      const container = containerRef.current;
+      if (!container) return;
+      const rect = container.getBoundingClientRect();
+      const maxX = Math.max(0, rect.width - ROBOT_SIZE_PX);
+      const maxY = Math.max(0, rect.height - ROBOT_SIZE_PX);
+      setPos((p) => ({
+        x: clamp(p.x, 0, maxX),
+        y: clamp(p.y, 0, maxY),
+      }));
     };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
-      toast({
-        title: "Configuration required",
-        description:
-          "Email service is not configured yet. Please set EmailJS environment variables.",
-        variant: "destructive",
-      });
-      return;
-    }
+  const onPointerDown = (event: ReactPointerEvent<HTMLImageElement>) => {
+    const container = containerRef.current;
+    if (!container) return;
+    const rect = container.getBoundingClientRect();
 
-    setIsSubmitting(true);
+    dragOffsetRef.current = {
+      dx: event.clientX - (rect.left + pos.x),
+      dy: event.clientY - (rect.top + pos.y),
+    };
 
-    try {
-      await emailjs.send(
-        SERVICE_ID,
-        TEMPLATE_ID,
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          company: formData.company,
-          budget: formData.budget,
-          project_type: formData.project_type,
-          message: formData.message,
-        },
-        PUBLIC_KEY,
-      );
-
-      toast({
-        title: "Message sent",
-        description: "Thanks for reaching out. We will get back to you shortly.",
-      });
-      setFormData(initialForm);
-    } catch (_error) {
-      toast({
-        title: "Submission failed",
-        description:
-          "Please check EmailJS configuration and try again, or email us directly.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    setDragging(true);
+    event.currentTarget.setPointerCapture(event.pointerId);
   };
+
+  const onPointerMove = (event: ReactPointerEvent<HTMLImageElement>) => {
+    if (!dragging) return;
+    const container = containerRef.current;
+    if (!container) return;
+    const rect = container.getBoundingClientRect();
+
+    const maxX = Math.max(0, rect.width - ROBOT_SIZE_PX);
+    const maxY = Math.max(0, rect.height - ROBOT_SIZE_PX);
+
+    const nextX = event.clientX - rect.left - dragOffsetRef.current.dx;
+    const nextY = event.clientY - rect.top - dragOffsetRef.current.dy;
+
+    setPos({
+      x: clamp(nextX, 0, maxX),
+      y: clamp(nextY, 0, maxY),
+    });
+  };
+
+  const onPointerUp = () => setDragging(false);
+
+  const emailHref = useMemo(() => "mailto:hello@timesquarellc.com", []);
 
   return (
     <div className="relative py-24 lg:py-32">
@@ -131,88 +114,93 @@ export default function Contact() {
             Let&apos;s Build Your Next <span className="gradient-text">AI Project</span>
           </h1>
           <p className="text-lg text-muted-foreground">
-            Tell us what you are building and we will propose the fastest, most practical way
-            to deliver measurable impact.
+            Drag the robot assistant, then book a call or email us directly.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 glass-card p-8 md:p-10">
-            <h2 className="font-display text-2xl font-semibold mb-6">Project Inquiry Form</h2>
-            <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-4">
-              <input
-                required
-                value={formData.name}
-                onChange={handleChange("name")}
-                placeholder="Full name"
-                className="h-11 rounded-lg border border-border bg-background px-4 text-sm"
-              />
-              <input
-                required
-                type="email"
-                value={formData.email}
-                onChange={handleChange("email")}
-                placeholder="Email address"
-                className="h-11 rounded-lg border border-border bg-background px-4 text-sm"
-              />
-              <input
-                value={formData.company}
-                onChange={handleChange("company")}
-                placeholder="Company"
-                className="h-11 rounded-lg border border-border bg-background px-4 text-sm"
-              />
-              <select
-                value={formData.budget}
-                onChange={handleChange("budget")}
-                className="h-11 rounded-lg border border-border bg-background px-4 text-sm"
-              >
-                <option value="">Budget range</option>
-                <option value="under-5k">Under GBP 5k</option>
-                <option value="5k-20k">GBP 5k - 20k</option>
-                <option value="20k-50k">GBP 20k - 50k</option>
-                <option value="50k-plus">GBP 50k+</option>
-              </select>
-              <select
-                value={formData.project_type}
-                onChange={handleChange("project_type")}
-                className="h-11 rounded-lg border border-border bg-background px-4 text-sm md:col-span-2"
-              >
-                <option value="">Project type</option>
-                <option value="ai-integration">AI / LLM Integration</option>
-                <option value="automation">Business Process Automation</option>
-                <option value="web-development">Web Platform Development</option>
-                <option value="data-analytics">Data Analytics / ML</option>
-              </select>
-              <textarea
-                required
-                value={formData.message}
-                onChange={handleChange("message")}
-                rows={6}
-                placeholder="Tell us about your current challenge and desired outcome..."
-                className="rounded-lg border border-border bg-background px-4 py-3 text-sm md:col-span-2"
-              />
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="btn-gradient md:col-span-2 disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? "Sending..." : "Send Message"}
-              </button>
-            </form>
-            <div className="mt-5 glass-card p-4 flex items-start gap-3">
-              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center flex-shrink-0">
-                <img src="/robot-assistant.svg" alt="" className="h-6 w-6" loading="lazy" />
-              </div>
+            <div className="flex items-start justify-between gap-6 mb-6">
               <div>
-                <p className="text-sm font-semibold mb-1">AI Concierge</p>
-                <p className="text-xs text-muted-foreground">
-                  If email delivery is not set up yet, you can still email us directly at{" "}
-                  <a href="mailto:hello@timesquarellc.com" className="text-primary hover:underline">
-                    hello@timesquarellc.com
-                  </a>
-                  .
+                <h2 className="font-display text-2xl font-semibold mb-2">AI Concierge</h2>
+                <p className="text-muted-foreground">
+                  This is a lightweight “demo robot”. Drag it around anywhere in the box.
                 </p>
               </div>
+              <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                <Sparkles className="w-5 h-5 text-primary" />
+              </div>
+            </div>
+
+            <div
+              ref={containerRef}
+              className="relative h-[380px] md:h-[420px] rounded-xl border border-border/50 bg-secondary/20 overflow-hidden select-none touch-none"
+            >
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="absolute inset-0 w-full h-full object-cover opacity-90 pointer-events-none"
+              >
+                <source src="/videos/transparent-inquiry.mp4" type="video/mp4" />
+              </video>
+
+              <div className="absolute -top-20 -left-24 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
+              <div className="absolute -bottom-20 -right-24 h-56 w-56 rounded-full bg-accent/10 blur-3xl" />
+
+              <img
+                src="/robot-assistant.svg"
+                alt="AI Concierge robot"
+                loading="lazy"
+                draggable={false}
+                onPointerDown={onPointerDown}
+                onPointerMove={onPointerMove}
+                onPointerUp={onPointerUp}
+                onPointerCancel={onPointerUp}
+                style={{
+                  position: "absolute",
+                  left: pos.x,
+                  top: pos.y,
+                  cursor: dragging ? "grabbing" : "grab",
+                  touchAction: "none",
+                  userSelect: "none",
+                }}
+                className="h-14 w-14"
+              />
+
+              <div className="absolute left-5 bottom-5 right-5">
+                <div className="glass-card p-4">
+                  <p className="text-sm font-semibold mb-1">Need to reach us?</p>
+                  <p className="text-xs text-muted-foreground">
+                    Email{" "}
+                    <a href={emailHref} className="text-primary hover:underline">
+                      hello@timesquarellc.com
+                    </a>{" "}
+                    or book a call.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-5 flex flex-col sm:flex-row gap-3">
+              <a
+                href={emailHref}
+                className="btn-outline-gradient inline-flex items-center justify-center gap-2 flex-1"
+              >
+                <Mail size={16} />
+                Email us
+              </a>
+              <a
+                href={BOOK_CALL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-gradient inline-flex items-center justify-center gap-2 flex-1"
+              >
+                <Calendar size={16} />
+                Book a Call
+              </a>
             </div>
           </div>
 
@@ -221,7 +209,7 @@ export default function Contact() {
               <h3 className="font-display text-lg font-semibold mb-4">Direct Contact</h3>
               <div className="space-y-3 text-sm">
                 <a
-                  href="mailto:hello@timesquarellc.com"
+                  href={emailHref}
                   className="flex items-center gap-2 text-muted-foreground hover:text-primary"
                 >
                   <Mail size={16} /> hello@timesquarellc.com
@@ -288,3 +276,4 @@ export default function Contact() {
     </div>
   );
 }
+
