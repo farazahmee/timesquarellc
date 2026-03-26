@@ -199,9 +199,21 @@ export default function Contact() {
                 {isSubmitting ? "Sending..." : "Send Message"}
               </button>
             </form>
-            <p className="text-xs text-muted-foreground mt-4">
-              Configure EmailJS via environment variables before production.
-            </p>
+            <div className="mt-5 glass-card p-4 flex items-start gap-3">
+              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center flex-shrink-0">
+                <img src="/robot-assistant.svg" alt="" className="h-6 w-6" loading="lazy" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold mb-1">AI Concierge</p>
+                <p className="text-xs text-muted-foreground">
+                  If email delivery is not set up yet, you can still email us directly at{" "}
+                  <a href="mailto:hello@timesquarellc.com" className="text-primary hover:underline">
+                    hello@timesquarellc.com
+                  </a>
+                  .
+                </p>
+              </div>
+            </div>
           </div>
 
           <aside className="space-y-6">

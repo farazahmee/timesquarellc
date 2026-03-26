@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { ArrowUp } from "lucide-react";
 
 export default function ScrollToTop() {
+  const location = useLocation();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -13,6 +15,15 @@ export default function ScrollToTop() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Ensure every route navigation starts at the top.
+  useEffect(() => {
+    // Let React/router update the DOM, then force scroll restoration.
+    window.requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0 });
+      setVisible(false);
+    });
+  }, [location.pathname]);
 
   if (!visible) {
     return null;
