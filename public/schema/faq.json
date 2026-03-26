@@ -1,0 +1,38 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What types of AI solutions does TimeSquare LLC build?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We specialize in LLM integrations (ChatGPT, GPT-4), natural language processing, computer vision, chatbot development, and machine learning models like churn prediction."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does a typical AI integration project take?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most projects range from 4-12 weeks depending on complexity. A chatbot or API integration might take 4-6 weeks, while a full-stack platform typically takes 8-12 weeks."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does TimeSquare LLC work with businesses outside the UK?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, we serve clients across the UK, US, and Middle East with timezone-flexible collaboration."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does an AI integration project cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Project costs vary. A focused AI integration starts from GBP 5,000, while full-stack platforms range from GBP 15,000-50,000+. We provide detailed quotes after a free consultation."
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "TimeSquare LLC",
+  "description": "AI integration and automation agency building intelligent business solutions",
+  "url": "https://timesquarellc.com",
+  "email": "hello@timesquarellc.com",
+  "telephone": "",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Grays",
+    "addressRegion": "Essex",
+    "addressCountry": "GB"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "51.4868",
+    "longitude": "0.2889"
+  },
+  "sameAs": ["https://www.linkedin.com/company/timesquarellc/"],
+  "serviceType": [
+    "AI Integration",
+    "Business Process Automation",
+    "Web Application Development",
+    "Data Analytics",
+    "ChatGPT Integration",
+    "Machine Learning Development"
+  ],
+  "areaServed": [
+    { "@type": "Country", "name": "United Kingdom" },
+    { "@type": "Country", "name": "United States" },
+    { "@type": "Country", "name": "United Arab Emirates" }
+  ],
+  "priceRange": "££-£££"
+}
