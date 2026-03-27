@@ -1,4 +1,48 @@
+# TimeSquare LLC - Search Engine Directives
+# Generated: March 27, 2026
+
+# Allow all crawlers by default
 User-agent: *
 Allow: /
+
+# Disallow private/admin pages
+Disallow: /admin/
 Disallow: /api/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /*?*sort=
+Disallow: /*?*utm_
+
+# Crawl delay for general crawlers
+Crawl-delay: 1
+
+# Request rate limits
+Request-rate: 30/1m
+
+# Sitemap location
 Sitemap: https://timesquarellc.com/sitemap.xml
+
+# Google-specific rules (no crawl delay)
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing-specific rules
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# LinkedIn crawler
+User-agent: LinkedInBot
+Allow: /
+Crawl-delay: 2
+
+# Block bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
