@@ -9,6 +9,10 @@
     <meta name="author" content="TimeSquare LLC" />
     <meta name="robots" content="index, follow" />
 
+    <!-- Google Search Console: replace the content value below with the code from
+         Search Console > Add property (URL prefix https://timesquarellc.com) > HTML tag. -->
+    <meta name="google-site-verification" content="REPLACE_WITH_GOOGLE_SEARCH_CONSOLE_CODE" />
+
     <meta property="og:title" content="TimeSquare LLC - AI Integration & Automation Agency" />
     <meta property="og:description" content="We build intelligent AI solutions and automation systems that help businesses operate smarter and grow faster." />
     <meta property="og:type" content="website" />
@@ -27,8 +31,98 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <script type="application/ld+json" src="/schema/professional-service.json"></script>
-    <script type="application/ld+json" src="/schema/faq.json"></script>
+    <!-- Structured data must be inline: crawlers ignore JSON-LD loaded via a src attribute. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://timesquarellc.com/#organization",
+          "name": "TimeSquare LLC",
+          "url": "https://timesquarellc.com",
+          "logo": "https://timesquarellc.com/og-image-1200x630.png",
+          "email": "hello@timesquarellc.com",
+          "description": "TimeSquare LLC builds AI-powered automation, ChatGPT/LLM integrations, web and mobile applications, and data analytics solutions for B2B teams.",
+          "sameAs": ["https://www.linkedin.com/company/timesquarellc/"]
+        },
+        {
+          "@type": "ProfessionalService",
+          "@id": "https://timesquarellc.com/#service",
+          "name": "TimeSquare LLC",
+          "description": "AI integration and automation agency building intelligent business solutions.",
+          "url": "https://timesquarellc.com",
+          "email": "hello@timesquarellc.com",
+          "parentOrganization": { "@id": "https://timesquarellc.com/#organization" },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Grays",
+            "addressRegion": "Essex",
+            "addressCountry": "GB"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "51.4868",
+            "longitude": "0.2889"
+          },
+          "sameAs": ["https://www.linkedin.com/company/timesquarellc/"],
+          "serviceType": [
+            "AI Integration",
+            "Business Process Automation",
+            "Web Application Development",
+            "Mobile Application Development",
+            "Data Analytics",
+            "ChatGPT Integration",
+            "Machine Learning Development"
+          ],
+          "areaServed": [
+            { "@type": "Country", "name": "United Kingdom" },
+            { "@type": "Country", "name": "United States" },
+            { "@type": "Country", "name": "United Arab Emirates" }
+          ],
+          "priceRange": "££-£££"
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://timesquarellc.com/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What types of AI solutions does TimeSquare LLC build?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "We specialize in LLM integrations (ChatGPT, GPT-4), natural language processing, computer vision, chatbot development, and machine learning models like churn prediction."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How long does a typical AI integration project take?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Most projects range from 4-12 weeks depending on complexity. A chatbot or API integration might take 4-6 weeks, while a full-stack platform typically takes 8-12 weeks."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does TimeSquare LLC work with businesses outside the UK?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, we serve clients across the UK, US, and Middle East with timezone-flexible collaboration."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How much does an AI integration project cost?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Project costs vary. A focused AI integration starts from GBP 5,000, while full-stack platforms range from GBP 15,000-50,000+. We provide detailed quotes after a free consultation."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VJMYJJLSQ9"></script>
     <script>
