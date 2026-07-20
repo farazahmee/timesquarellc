@@ -101,17 +101,6 @@ const services = [
       "Third-party Integrations",
     ],
   },
-  {
-    icon: Megaphone,
-    title: "Digital Marketing",
-    description: "Drive qualified traffic and growth with performance-focused digital marketing campaigns.",
-    features: [
-      "Marketing Campaign Strategy",
-      "Paid Ads Management (Google & Social)",
-      "SEO Content & On-page Optimization",
-      "Conversion Tracking & Reporting",
-    ],
-  },
 ];
 
 const techStack = [

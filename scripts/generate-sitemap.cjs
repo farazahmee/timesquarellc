@@ -1,9 +1,13 @@
 #!/usr/bin/env node
 
 /**
- * Sitemap Generator for TimeSquare LLC
- * Run: node scripts/generate-sitemap.js
- * Or add to package.json: "build": "tsc && vite build && node scripts/generate-sitemap.js"
+ * Sitemap generator for TimeSquare LLC.
+ * Runs at build time (see package.json "build" and vercel.json "buildCommand").
+ *
+ * Static routes below MUST match the routes registered in src/App.tsx.
+ * Blog posts are discovered automatically from content/blog/*.md(x), so an
+ * n8n workflow only has to commit a new markdown file — the next build picks
+ * it up here and in the /blog listing.
  */
 
 const fs = require('fs');
@@ -11,110 +15,75 @@ const path = require('path');
 
 const DOMAIN = 'https://timesquarellc.com';
 const OUTPUT_PATH = path.join(__dirname, '../public/sitemap.xml');
+const BLOG_DIR = path.join(__dirname, '../content/blog');
 
-// Define all routes with metadata
-const routes = [
-  // Main pages
-  {
-    path: '/',
-    priority: 1.0,
-    changefreq: 'weekly',
-    lastmod: new Date().toISOString().split('T')[0]
-  },
-  {
-    path: '/services',
-    priority: 0.95,
-    changefreq: 'weekly',
-    lastmod: new Date().toISOString().split('T')[0]
-  },
-  {
-    path: '/services/ai-integration',
-    priority: 0.85,
-    changefreq: 'monthly'
-  },
-  {
-    path: '/services/automation',
-    priority: 0.85,
-    changefreq: 'monthly'
-  },
-  {
-    path: '/services/consulting',
-    priority: 0.85,
-    changefreq: 'monthly'
-  },
-  {
-    path: '/case-studies',
-    priority: 0.8,
-    changefreq: 'weekly'
-  },
-  {
-    path: '/about',
-    priority: 0.75,
-    changefreq: 'monthly'
-  },
-  {
-    path: '/blog',
-    priority: 0.75,
-    changefreq: 'weekly'
-  },
-  {
-    path: '/contact',
-    priority: 0.7,
-    changefreq: 'monthly'
-  },
-  {
-    path: '/demo',
-    priority: 0.6,
-    changefreq: 'monthly'
-  },
+const today = new Date().toISOString().split('T')[0];
 
-  // Legal pages
-  {
-    path: '/privacy-policy',
-    priority: 0.5,
-    changefreq: 'yearly'
-  },
-  {
-    path: '/terms-of-service',
-    priority: 0.5,
-    changefreq: 'yearly'
-  },
+// Static routes — keep in sync with the <Route> list in src/App.tsx.
+const staticRoutes = [
+  { path: '/', priority: 1.0, changefreq: 'weekly' },
+  { path: '/services', priority: 0.9, changefreq: 'monthly' },
+  { path: '/case-studies', priority: 0.8, changefreq: 'weekly' },
+  { path: '/blog', priority: 0.75, changefreq: 'weekly' },
+  { path: '/about', priority: 0.7, changefreq: 'monthly' },
+  { path: '/contact', priority: 0.7, changefreq: 'monthly' },
+  { path: '/privacy-policy', priority: 0.3, changefreq: 'yearly' },
+  { path: '/terms-of-service', priority: 0.3, changefreq: 'yearly' },
 ];
 
-// Generate XML
+// Minimal frontmatter reader — pulls `slug` and `date` from a markdown file.
+function readFrontmatter(file) {
+  const raw = fs.readFileSync(file, 'utf-8');
+  const match = raw.match(/^---\s*[\r\n]([\s\S]*?)[\r\n]---/);
+  if (!match) return {};
+  const data = {};
+  for (const line of match[1].split(/\r?\n/)) {
+    const kv = line.match(/^([A-Za-z0-9_]+)\s*:\s*(.*)$/);
+    if (kv) data[kv[1]] = kv[2].trim().replace(/^["']|["']$/g, '');
+  }
+  return data;
+}
+
+function discoverBlogPosts() {
+  if (!fs.existsSync(BLOG_DIR)) return [];
+  return fs
+    .readdirSync(BLOG_DIR)
+    .filter((f) => /\.mdx?$/.test(f) && f.toLowerCase() !== 'readme.md')
+    .map((f) => ({ f, fm: readFrontmatter(path.join(BLOG_DIR, f)) }))
+    .filter(({ fm }) => fm.title) // only real, publishable posts
+    .map(({ f, fm }) => {
+      const slug = fm.slug || f.replace(/\.mdx?$/, '');
+      return {
+        path: `/blog/${slug}`,
+        priority: 0.7,
+        changefreq: 'monthly',
+        lastmod: fm.date ? String(fm.date).split('T')[0] : today,
+      };
+    });
+}
+
+const routes = [...staticRoutes, ...discoverBlogPosts()];
+
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-${routes.map(route => {
-  const lastmod = route.lastmod || new Date().toISOString().split('T')[0];
-  return `  <url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${routes
+  .map((route) => {
+    const lastmod = route.lastmod || today;
+    return `  <url>
     <loc>${DOMAIN}${route.path}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${route.changefreq}</changefreq>
     <priority>${route.priority}</priority>
   </url>`;
-}).join('\n')}
+  })
+  .join('\n')}
 </urlset>`;
 
-// Ensure directory exists
 const dirPath = path.dirname(OUTPUT_PATH);
 if (!fs.existsSync(dirPath)) {
   fs.mkdirSync(dirPath, { recursive: true });
 }
-
-// Write file
 fs.writeFileSync(OUTPUT_PATH, sitemap, 'utf-8');
 
-console.log(`✅ Sitemap generated successfully!`);
-console.log(`📍 File: ${OUTPUT_PATH}`);
-console.log(`📊 Total URLs: ${routes.length}`);
-console.log(`🌐 Domain: ${DOMAIN}`);
-console.log(`\n📝 Remember to:`);
-console.log(`   1. Copy this to public/sitemap.xml`);
-console.log(`   2. Deploy to production`);
-console.log(`   3. Submit to Google Search Console`);
-console.log(`   4. Monitor crawl errors in GSC`);
+console.log(`Sitemap generated: ${OUTPUT_PATH}`);
+console.log(`Total URLs: ${routes.length} (${routes.length - staticRoutes.length} blog posts)`);
