@@ -1,21 +1,17 @@
 {
-  "buildCommand": "npm run build && node scripts/generate-sitemap.cjs",
+  "buildCommand": "npm run build",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "env": {
     "REACT_APP_SITE_URL": "https://timesquarellc.com",
     "REACT_APP_GA_ID": "G-XXXXXXXXXX"
   },
-  "rewrites": [
+  "redirects": [
     {
-      "source": "/sitemap.xml",
-      "destination": "/sitemap.xml"
-    },
-    {
-      "source": "/robots.txt",
-      "destination": "/robots.txt"
-    },
-    {
-      "source": "/((?!assets|videos|favicon|robots|sitemap).*)",
-      "destination": "/index.html"
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.timesquarellc.com" }],
+      "destination": "https://timesquarellc.com/:path*",
+      "permanent": true
     }
   ],
   "headers": [
