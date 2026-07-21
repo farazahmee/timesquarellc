@@ -1,4 +1,12 @@
+import { useSEO } from "@/hooks/useSEO";
+
 export function TermsOfService() {
+  useSEO({
+    title: "Terms of Service | TimeSquare LLC",
+    description:
+      "The terms and conditions governing your use of the TimeSquare LLC website and services.",
+    canonical: "https://timesquarellc.com/terms-of-service",
+  });
   return (
     <main id="main-content">
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '2rem' }}>

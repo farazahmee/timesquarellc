@@ -9,6 +9,8 @@ const SITE_ORIGIN = "https://timesquarellc.com";
 /** Injects Article JSON-LD for this post and removes it on unmount. */
 function useArticleJsonLd(json: Record<string, unknown> | null) {
   useEffect(() => {
+    // Drop any pre-rendered Article block so we never duplicate structured data.
+    document.head.querySelectorAll("script[data-blog-post]").forEach((el) => el.remove());
     if (!json) return;
     const script = document.createElement("script");
     script.type = "application/ld+json";
@@ -16,7 +18,7 @@ function useArticleJsonLd(json: Record<string, unknown> | null) {
     script.textContent = JSON.stringify(json);
     document.head.appendChild(script);
     return () => {
-      document.head.removeChild(script);
+      script.remove();
     };
   }, [json]);
 }
