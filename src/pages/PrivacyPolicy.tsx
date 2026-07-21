@@ -1,4 +1,12 @@
+import { useSEO } from "@/hooks/useSEO";
+
 export function PrivacyPolicy() {
+  useSEO({
+    title: "Privacy Policy | TimeSquare LLC",
+    description:
+      "How TimeSquare LLC collects, uses, and protects your information when you use timesquarellc.com.",
+    canonical: "https://timesquarellc.com/privacy-policy",
+  });
   return (
     <main id="main-content">
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '2rem' }}>
