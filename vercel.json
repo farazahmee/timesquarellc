@@ -6,14 +6,6 @@
     "REACT_APP_SITE_URL": "https://timesquarellc.com",
     "REACT_APP_GA_ID": "G-XXXXXXXXXX"
   },
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.timesquarellc.com" }],
-      "destination": "https://timesquarellc.com/:path*",
-      "permanent": true
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
