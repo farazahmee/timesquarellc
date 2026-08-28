@@ -18,9 +18,9 @@ const STATIC_ROUTES = [
     path: '/',
     priority: 1.0,
     changefreq: 'weekly',
-    title: 'TimeSquare LLC | AI Integration & Automation Agency | UK',
+    title: 'AI Automation & Custom Software Development | TimeSquare LLC',
     description:
-      'We build AI-powered automation, ChatGPT integration services, and data analytics solutions for businesses. Based in UK, serving clients globally.',
+      'We build AI automation, chatbots, and custom software that cut manual work out of business operations. UK-based, serving teams in healthcare, finance and retail.',
   },
   {
     path: '/services',

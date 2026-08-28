@@ -6,53 +6,53 @@
 
 @layer base {
   :root {
-    --background: 240 6% 4%;
+    --background: 222 47% 5%;
     --foreground: 0 0% 98%;
 
-    --card: 240 4% 10%;
+    --card: 222 44% 8%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 240 4% 10%;
+    --popover: 222 44% 8%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 258 90% 66%;
+    --primary: 214 100% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 4% 16%;
+    --secondary: 217 33% 16%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 240 4% 16%;
-    --muted-foreground: 240 5% 65%;
+    --muted: 217 33% 16%;
+    --muted-foreground: 214 20% 70%;
 
-    --accent: 217 91% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 189 94% 55%;
+    --accent-foreground: 222 47% 6%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 4% 16%;
-    --input: 240 4% 16%;
-    --ring: 258 90% 66%;
+    --border: 217 33% 16%;
+    --input: 217 33% 16%;
+    --ring: 214 100% 60%;
 
     --radius: 0.75rem;
 
-    /* Custom brand colors */
-    --brand-purple: 258 90% 66%;
-    --brand-blue: 217 91% 60%;
-    --brand-cyan: 191 91% 54%;
-    --brand-violet: 270 76% 53%;
-    --space-dark: 222 47% 4%;
-    --space-darker: 222 47% 2%;
+    /* Brand palette: deep navy base, electric blue primary, cyan accent. */
+    --brand-navy: 222 60% 11%;
+    --brand-blue-deep: 224 76% 48%;
+    --brand-blue: 214 100% 60%;
+    --brand-cyan: 189 94% 55%;
+    --space-dark: 222 47% 5%;
+    --space-darker: 222 47% 3%;
     --space-light: 217 33% 12%;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--brand-purple)), hsl(var(--brand-blue)), hsl(var(--brand-cyan)));
-    --gradient-dark: linear-gradient(180deg, hsl(222 47% 6%), hsl(222 47% 3%));
-    --gradient-glow: radial-gradient(ellipse at center, hsl(var(--brand-purple) / 0.15), transparent 70%);
+    --gradient-primary: linear-gradient(135deg, hsl(var(--brand-blue-deep)), hsl(var(--brand-blue)), hsl(var(--brand-cyan)));
+    --gradient-dark: linear-gradient(180deg, hsl(222 47% 7%), hsl(222 47% 4%));
+    --gradient-glow: radial-gradient(ellipse at center, hsl(var(--brand-blue) / 0.14), transparent 70%);
 
     /* Shadows */
-    --shadow-glow: 0 0 60px hsl(var(--brand-purple) / 0.3);
-    --shadow-card: 0 25px 80px -12px hsl(222 47% 2% / 0.9);
+    --shadow-glow: 0 0 60px hsl(var(--brand-blue) / 0.2);
+    --shadow-card: 0 24px 70px -20px hsl(222 60% 2% / 0.85);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -65,25 +65,25 @@
   }
 
   .dark {
-    --background: 240 6% 4%;
+    --background: 222 47% 5%;
     --foreground: 0 0% 98%;
-    --card: 240 4% 10%;
+    --card: 222 44% 8%;
     --card-foreground: 0 0% 98%;
-    --popover: 240 4% 10%;
+    --popover: 222 44% 8%;
     --popover-foreground: 0 0% 98%;
-    --primary: 258 90% 66%;
+    --primary: 214 100% 60%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 240 4% 16%;
+    --secondary: 217 33% 16%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 240 4% 16%;
-    --muted-foreground: 240 5% 65%;
-    --accent: 217 91% 60%;
-    --accent-foreground: 0 0% 100%;
+    --muted: 217 33% 16%;
+    --muted-foreground: 214 20% 70%;
+    --accent: 189 94% 55%;
+    --accent-foreground: 222 47% 6%;
     --destructive: 0 63% 31%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 4% 16%;
-    --input: 240 4% 16%;
-    --ring: 258 90% 66%;
+    --border: 217 33% 16%;
+    --input: 217 33% 16%;
+    --ring: 214 100% 60%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -112,13 +112,14 @@
 
 @layer components {
   .font-display {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
     font-weight: 700;
+    letter-spacing: -0.025em;
   }
 
   .gradient-text {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(var(--brand-purple)), hsl(var(--brand-blue)), hsl(var(--brand-cyan)));
+    background-image: linear-gradient(135deg, hsl(var(--brand-blue-deep)), hsl(var(--brand-blue)), hsl(var(--brand-cyan)));
   }
 
   .gradient-border {
@@ -131,7 +132,7 @@
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, hsl(var(--brand-purple)), hsl(var(--brand-blue)), hsl(var(--brand-cyan)));
+    background: linear-gradient(135deg, hsl(var(--brand-blue-deep)), hsl(var(--brand-blue)), hsl(var(--brand-cyan)));
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
@@ -143,35 +144,36 @@
     box-shadow: var(--shadow-card);
   }
 
-  .glow-purple {
-    box-shadow: 0 0 40px hsl(var(--brand-purple) / 0.4);
+  .glow-blue {
+    box-shadow: 0 0 40px hsl(var(--brand-blue) / 0.25);
   }
 
-  .glow-blue {
-    box-shadow: 0 0 40px hsl(var(--brand-blue) / 0.4);
+  .glow-cyan {
+    box-shadow: 0 0 40px hsl(var(--brand-cyan) / 0.22);
   }
 
   .btn-gradient {
     @apply relative overflow-hidden px-6 py-3 rounded-lg font-semibold text-primary-foreground transition-all duration-300;
-    background: linear-gradient(135deg, hsl(var(--brand-purple)), hsl(var(--brand-blue)));
+    background: linear-gradient(135deg, hsl(var(--brand-blue-deep)), hsl(var(--brand-blue)));
   }
 
   .btn-gradient:hover {
-    @apply brightness-110 scale-105;
-    box-shadow: 0 10px 40px hsl(var(--brand-purple) / 0.4);
+    @apply brightness-110;
+    box-shadow: 0 12px 32px -8px hsl(var(--brand-blue) / 0.5);
+    transform: translateY(-1px);
   }
 
   .btn-outline-gradient {
     @apply relative px-6 py-3 rounded-lg font-semibold transition-all duration-300 bg-transparent;
-    background: linear-gradient(var(--background), var(--background)) padding-box,
-                linear-gradient(135deg, hsl(var(--brand-purple)), hsl(var(--brand-blue)), hsl(var(--brand-cyan))) border-box;
+    background: linear-gradient(hsl(var(--background)), hsl(var(--background))) padding-box,
+                linear-gradient(135deg, hsl(var(--brand-blue-deep)), hsl(var(--brand-blue)), hsl(var(--brand-cyan))) border-box;
     border: 1px solid transparent;
     color: hsl(var(--foreground));
   }
 
   .btn-outline-gradient:hover {
-    background: linear-gradient(135deg, hsl(var(--brand-purple) / 0.1), hsl(var(--brand-blue) / 0.1)) padding-box,
-                linear-gradient(135deg, hsl(var(--brand-purple)), hsl(var(--brand-blue)), hsl(var(--brand-cyan))) border-box;
+    background: linear-gradient(135deg, hsl(var(--brand-blue-deep) / 0.1), hsl(var(--brand-blue) / 0.1)) padding-box,
+                linear-gradient(135deg, hsl(var(--brand-blue-deep)), hsl(var(--brand-blue)), hsl(var(--brand-cyan))) border-box;
   }
 
   .cyber-grid {
