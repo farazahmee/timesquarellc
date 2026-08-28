@@ -15,7 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Orbitron', 'sans-serif'],
+        display: ['Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -61,11 +61,11 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        cyber: {
-          orange: "hsl(var(--cyber-orange))",
-          pink: "hsl(var(--cyber-pink))",
-          blue: "hsl(var(--cyber-blue))",
-          purple: "hsl(var(--cyber-purple))",
+        brand: {
+          navy: "hsl(var(--brand-navy))",
+          blue: "hsl(var(--brand-blue))",
+          "blue-deep": "hsl(var(--brand-blue-deep))",
+          cyan: "hsl(var(--brand-cyan))",
         },
         space: {
           dark: "hsl(var(--space-dark))",
