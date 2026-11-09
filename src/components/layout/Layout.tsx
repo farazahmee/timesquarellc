@@ -14,10 +14,14 @@ export default function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <a
+        href="#main-content"
+        className="sr-only z-[100] rounded-md bg-white px-4 py-2 text-sm font-medium text-black focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+      >
+        Skip to content
+      </a>
       <Navbar />
-      <main className="pt-20">
-        {/* Keyed so the fade-in replays on each route change. Replaces the
-            former framer-motion page transition to keep it out of the bundle. */}
+      <main id="main-content">
         <div key={location.pathname} className="animate-fade-in">
           {children}
         </div>

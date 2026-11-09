@@ -1,9 +1,22 @@
-import { ChangeEvent, FormEvent, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import { Calendar, Mail, MapPin, Linkedin } from "lucide-react";
+import { ChangeEvent, FormEvent, useState } from "react";
+import {
+  ArrowUpRight,
+  Calendar,
+  Clock,
+  Linkedin,
+  Mail,
+  MapPin,
+  MessageSquare,
+} from "lucide-react";
 import emailjs from "@emailjs/browser";
 import { toast } from "@/components/ui/use-toast";
 import { useSEO } from "@/hooks/useSEO";
+import PageHero from "@/components/site/PageHero";
+import Container from "@/components/site/Container";
+import Reveal from "@/components/site/Reveal";
+import SectionHeading from "@/components/site/SectionHeading";
+import FaqAccordion from "@/components/site/FaqAccordion";
+import { CONTACT_FAQS, SITE } from "@/content/site";
 
 type ContactFormData = {
   name: string;
@@ -13,8 +26,6 @@ type ContactFormData = {
   project_type: string;
   message: string;
 };
-
-const BOOK_CALL_URL = "https://calendar.app.google/meegViXuibrs6Egq7";
 
 const initialForm: ContactFormData = {
   name: "",
@@ -36,8 +47,8 @@ export default function Contact() {
   const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID ?? "";
   const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID ?? "";
   const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY ?? "";
-
-  const CONTACT_TO_EMAIL = import.meta.env.VITE_CONTACT_TO_EMAIL ?? "faraz.root@gmail.com";
+  const CONTACT_TO_EMAIL =
+    import.meta.env.VITE_CONTACT_TO_EMAIL ?? "faraz.root@gmail.com";
 
   const [formData, setFormData] = useState<ContactFormData>(initialForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,12 +56,12 @@ export default function Contact() {
   const handleChange =
     (field: keyof ContactFormData) =>
     (
-      event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+      event: ChangeEvent<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >,
     ) => {
       setFormData((prev) => ({ ...prev, [field]: event.target.value }));
     };
-
-  const emailHref = useMemo(() => "mailto:hello@timesquarellc.com", []);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -85,7 +96,8 @@ export default function Contact() {
 
       toast({
         title: "Message sent",
-        description: "Thanks for reaching out. We will get back to you shortly.",
+        description:
+          "Thanks for reaching out. We will get back to you shortly.",
       });
       setFormData(initialForm);
     } catch (_error) {
@@ -101,185 +113,285 @@ export default function Contact() {
   };
 
   return (
-    <div className="relative py-24 lg:py-32">
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 glass-card p-8 md:p-10">
-            <h2 className="font-display text-2xl font-semibold mb-6">
-              Project Inquiry Form
-            </h2>
+    <div className="relative">
+      <PageHero
+        eyebrow="Contact"
+        title={
+          <>
+            Tell us where the{" "}
+            <span className="text-white/38">work piles up.</span>
+          </>
+        }
+        lead="A free 30-minute call. We will tell you what is worth automating first, what it takes to build, and roughly what it costs."
+      />
 
-            <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-4">
-              <input
-                required
-                value={formData.name}
-                onChange={handleChange("name")}
-                placeholder="Full name"
-                className="h-11 rounded-lg border border-border bg-background px-4 text-sm"
-              />
-              <input
-                required
-                type="email"
-                value={formData.email}
-                onChange={handleChange("email")}
-                placeholder="Email address"
-                className="h-11 rounded-lg border border-border bg-background px-4 text-sm"
-              />
-              <input
-                value={formData.company}
-                onChange={handleChange("company")}
-                placeholder="Company"
-                className="h-11 rounded-lg border border-border bg-background px-4 text-sm"
-              />
-              <select
-                value={formData.budget}
-                onChange={handleChange("budget")}
-                className="h-11 rounded-lg border border-border bg-background px-4 text-sm"
-              >
-                <option value="">Budget range</option>
-                <option value="under-5k">Under GBP 5k</option>
-                <option value="5k-20k">GBP 5k - 20k</option>
-                <option value="20k-50k">GBP 20k - 50k</option>
-                <option value="50k-plus">GBP 50k+</option>
-              </select>
-              <select
-                value={formData.project_type}
-                onChange={handleChange("project_type")}
-                className="h-11 rounded-lg border border-border bg-background px-4 text-sm md:col-span-2"
-              >
-                <option value="">Project type</option>
-                <option value="ai-integration">AI / LLM Integration</option>
-                <option value="automation">Business Process Automation</option>
-                <option value="web-development">Web Platform Development</option>
-                <option value="data-analytics">Data Analytics / ML</option>
-                <option value="digital-marketing">Digital Marketing</option>
-              </select>
-              <textarea
-                required
-                value={formData.message}
-                onChange={handleChange("message")}
-                rows={6}
-                placeholder="Tell us about your current challenge and desired outcome..."
-                className="rounded-lg border border-border bg-background px-4 py-3 text-sm md:col-span-2"
-              />
+      <section className="pb-8">
+        <Container>
+          <div className="grid gap-4 lg:grid-cols-[1.22fr_0.78fr] lg:items-start">
+            {/* Form */}
+            <Reveal>
+              <div className="glass p-6 md:p-8">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h2 className="display-3">Project inquiry</h2>
+                    <p className="body-copy mt-2">
+                      A few details are enough to start. We reply within one
+                      working day.
+                    </p>
+                  </div>
+                  <span className="hidden shrink-0 rounded-[5px] border border-white/10 bg-white/[0.025] px-2 py-1 font-mono text-[8px] uppercase tracking-[0.12em] text-white/32 sm:block">
+                    No obligation
+                  </span>
+                </div>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="btn-gradient md:col-span-2 disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? "Sending..." : "Send Message"}
-              </button>
-            </form>
+                <form onSubmit={handleSubmit} className="mt-7 grid gap-4 md:grid-cols-2">
+                  <div>
+                    <label htmlFor="name" className="meta-label mb-2 block">
+                      Full name <span className="text-ice/50">*</span>
+                    </label>
+                    <input
+                      id="name"
+                      required
+                      value={formData.name}
+                      onChange={handleChange("name")}
+                      placeholder="Your name"
+                      className="field"
+                      autoComplete="name"
+                    />
+                  </div>
 
-            <div className="mt-5 flex items-start gap-3">
-              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center flex-shrink-0">
-                <img src="/robot-assistant.svg" alt="" className="h-6 w-6" loading="lazy" />
+                  <div>
+                    <label htmlFor="email" className="meta-label mb-2 block">
+                      Email <span className="text-ice/50">*</span>
+                    </label>
+                    <input
+                      id="email"
+                      required
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange("email")}
+                      placeholder="you@company.com"
+                      className="field"
+                      autoComplete="email"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="company" className="meta-label mb-2 block">
+                      Company
+                    </label>
+                    <input
+                      id="company"
+                      value={formData.company}
+                      onChange={handleChange("company")}
+                      placeholder="Company name"
+                      className="field"
+                      autoComplete="organization"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="budget" className="meta-label mb-2 block">
+                      Budget range
+                    </label>
+                    <select
+                      id="budget"
+                      value={formData.budget}
+                      onChange={handleChange("budget")}
+                      className="field"
+                    >
+                      <option value="">Select a range</option>
+                      <option value="under-5k">Under £5k</option>
+                      <option value="5k-20k">£5k – £20k</option>
+                      <option value="20k-50k">£20k – £50k</option>
+                      <option value="50k-plus">£50k+</option>
+                    </select>
+                  </div>
+
+                  <div className="md:col-span-2">
+                    <label htmlFor="project_type" className="meta-label mb-2 block">
+                      Project type
+                    </label>
+                    <select
+                      id="project_type"
+                      value={formData.project_type}
+                      onChange={handleChange("project_type")}
+                      className="field"
+                    >
+                      <option value="">What are you looking to build?</option>
+                      <option value="ai-integration">AI / LLM integration</option>
+                      <option value="automation">Business process automation</option>
+                      <option value="agents">AI agent or assistant</option>
+                      <option value="web-development">Web platform development</option>
+                      <option value="data-analytics">Data analytics / ML</option>
+                      <option value="other">Something else</option>
+                    </select>
+                  </div>
+
+                  <div className="md:col-span-2">
+                    <label htmlFor="message" className="meta-label mb-2 block">
+                      What is the problem? <span className="text-ice/50">*</span>
+                    </label>
+                    <textarea
+                      id="message"
+                      required
+                      value={formData.message}
+                      onChange={handleChange("message")}
+                      rows={6}
+                      placeholder="Tell us about the workflow, the volume, and what a good outcome looks like..."
+                      className="field"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-3 md:col-span-2 sm:flex-row sm:items-center sm:justify-between">
+                    <p className="text-[11px] leading-relaxed text-white/30">
+                      By sending this form you agree to our{" "}
+                      <a
+                        href="/privacy-policy"
+                        className="text-white/50 underline decoration-white/20 underline-offset-2 hover:text-white/80"
+                      >
+                        privacy policy
+                      </a>
+                      .
+                    </p>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="btn btn-primary h-12 px-6 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {isSubmitting ? "Sending..." : "Send message"}
+                      {!isSubmitting && <ArrowUpRight size={15} strokeWidth={1.8} />}
+                    </button>
+                  </div>
+                </form>
+
+                <div className="mt-6 flex items-start gap-3 border-t border-white/10 pt-5">
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-[7px] border border-white/10 bg-white/[0.025] text-white/40">
+                    <MessageSquare size={14} strokeWidth={1.7} />
+                  </span>
+                  <p className="text-[12px] leading-[1.6] text-white/40">
+                    Prefer email? Write to{" "}
+                    <a
+                      href={`mailto:${SITE.email}`}
+                      className="text-white/70 underline decoration-white/20 underline-offset-2 hover:text-white"
+                    >
+                      {SITE.email}
+                    </a>{" "}
+                    and we will reply within one working day.
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="text-xs text-muted-foreground">
-                  Prefer email?{" "}
-                  <a href={emailHref} className="text-primary hover:underline">
-                    hello@timesquarellc.com
+            </Reveal>
+
+            {/* Aside */}
+            <div className="space-y-4">
+              <Reveal delay={90}>
+                <div className="rounded-[14px] border border-white/12 bg-gradient-to-br from-ice/[0.07] via-white/[0.025] to-transparent p-6">
+                  <div className="flex items-center gap-2.5">
+                    <span className="grid h-8 w-8 place-items-center rounded-[7px] border border-white/10 bg-white/[0.035] text-ice/70">
+                      <Calendar size={14} strokeWidth={1.7} />
+                    </span>
+                    <p className="font-mono text-[9px] uppercase tracking-[0.12em] text-white/40">
+                      Book directly
+                    </p>
+                  </div>
+                  <h3 className="display-3 mt-6">A 30-minute call.</h3>
+                  <p className="body-copy mt-3">
+                    Pick a time that suits you. Bring the workflow, the
+                    spreadsheet, or the problem you keep postponing.
+                  </p>
+                  <a
+                    href={SITE.calendarUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-primary mt-6 w-full"
+                  >
+                    Open calendar
+                    <ArrowUpRight size={15} strokeWidth={1.8} />
                   </a>
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  We send inquiries to{" "}
-                  <span className="text-primary font-semibold">{CONTACT_TO_EMAIL}</span>.
-                </p>
-              </div>
+                  <div className="mt-4 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.1em] text-white/30">
+                    <Clock size={11} />
+                    30 min · Google Meet · Free
+                  </div>
+                </div>
+              </Reveal>
+
+              <Reveal delay={150}>
+                <div className="glass p-6">
+                  <h3 className="meta-label">Direct contact</h3>
+                  <div className="mt-4 space-y-3 text-[12.5px]">
+                    <a
+                      href={`mailto:${SITE.email}`}
+                      className="flex items-center gap-2.5 text-white/55 transition-colors hover:text-white/85"
+                    >
+                      <Mail size={14} strokeWidth={1.7} className="text-white/30" />
+                      {SITE.email}
+                    </a>
+                    <p className="flex items-start gap-2.5 text-white/55">
+                      <MapPin size={14} strokeWidth={1.7} className="mt-0.5 text-white/30" />
+                      {SITE.location}
+                    </p>
+                    <a
+                      href={SITE.linkedinUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2.5 text-white/55 transition-colors hover:text-white/85"
+                    >
+                      <Linkedin size={14} strokeWidth={1.7} className="text-white/30" />
+                      LinkedIn
+                    </a>
+                  </div>
+                </div>
+              </Reveal>
+
+              <Reveal delay={210}>
+                <div className="glass p-6">
+                  <h3 className="meta-label">What happens next</h3>
+                  <ol className="mt-4 space-y-4">
+                    {[
+                      "We read the details and reply within one working day.",
+                      "A 30-minute call to understand the workflow and the constraint.",
+                      "A short, fixed-scope proposal with timeline and cost.",
+                    ].map((step, index) => (
+                      <li key={step} className="flex gap-3">
+                        <span className="font-mono text-[9px] text-ice/55">
+                          0{index + 1}
+                        </span>
+                        <span className="text-[12.5px] leading-[1.55] text-white/50">
+                          {step}
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </Reveal>
             </div>
           </div>
+        </Container>
+      </section>
 
-          <aside className="space-y-6">
-            <div className="glass-card p-6">
-              <h3 className="font-display text-lg font-semibold mb-4">Direct Contact</h3>
-              <div className="space-y-3 text-sm">
-                <a
-                  href={emailHref}
-                  className="flex items-center gap-2 text-muted-foreground hover:text-primary"
-                >
-                  <Mail size={16} /> hello@timesquarellc.com
-                </a>
-                <p className="flex items-start gap-2 text-muted-foreground">
-                  <MapPin size={16} className="mt-0.5" />
-                  Chafford Hundred, Grays, England
-                </p>
-                <a
-                  href="https://www.linkedin.com/company/timesquarellc/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-muted-foreground hover:text-primary"
-                >
-                  <Linkedin size={16} /> LinkedIn
-                </a>
-              </div>
-            </div>
-
-            <div className="glass-card p-6">
-              <h3 className="font-display text-lg font-semibold mb-3">Book a Call</h3>
-              <p className="text-sm text-muted-foreground mb-4">
-                Schedule a consultation and we will walk through scope, timeline, and next steps.
-              </p>
-              <a
-                href={BOOK_CALL_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-outline-gradient inline-flex items-center gap-2 w-full justify-center"
-              >
-                <Calendar size={16} />
-                Open Calendar
-              </a>
-            </div>
-
-            <div className="glass-card p-6">
-              <h3 className="font-display text-lg font-semibold mb-3">Legal</h3>
-              <div className="flex flex-col gap-2 text-sm text-muted-foreground">
-                <Link to="/privacy-policy" className="hover:text-primary">
-                  Privacy Policy
-                </Link>
-                <Link to="/terms-of-service" className="hover:text-primary">
-                  Terms of Service
-                </Link>
-              </div>
-            </div>
-          </aside>
-        </div>
-
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-          <div className="glass-card p-8 md:p-10">
-            <h2 className="font-display text-2xl font-semibold mb-6">
-              Frequently Asked Questions
-            </h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {[
-                {
-                  q: "How quickly can we start a project?",
-                  a: "Most projects can start within 1-2 weeks after discovery and scope alignment.",
-                },
-                {
-                  q: "Do you work with UK-only businesses?",
-                  a: "No. We are based in England and serve clients globally across time zones.",
-                },
-                {
-                  q: "Can you work with our existing engineering team?",
-                  a: "Yes. We often collaborate with internal teams for architecture, delivery, and handover.",
-                },
-                {
-                  q: "What project sizes do you typically support?",
-                  a: "From focused integrations and MVPs to full-scale platforms and multi-phase delivery.",
-                },
-              ].map((item) => (
-                <article key={item.q} className="space-y-2">
-                  <h3 className="font-semibold">{item.q}</h3>
-                  <p className="text-sm text-muted-foreground">{item.a}</p>
-                </article>
-              ))}
-            </div>
+      <section className="section">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
+            <SectionHeading
+              eyebrow="Questions"
+              title={
+                <>
+                  Before you{" "}
+                  <span className="text-white/38">send anything.</span>
+                </>
+              }
+              lead="A few practical answers. If yours is not here, ask it in the form."
+            />
+            <FaqAccordion
+              faqs={CONTACT_FAQS.map((item) => ({
+                question: item.q,
+                answer: item.a,
+              }))}
+            />
           </div>
-        </section>
+        </Container>
       </section>
     </div>
   );
 }
-

@@ -1,163 +1,146 @@
 import { Link } from "react-router-dom";
-import { Mail, MapPin, ArrowRight, Linkedin } from "lucide-react";
+import { ArrowUpRight, Linkedin, Mail, MapPin } from "lucide-react";
+import Container from "@/components/site/Container";
+import Logo from "@/components/site/Logo";
+import { SITE } from "@/content/site";
+
+const columns = [
+  {
+    title: "Services",
+    links: [
+      { label: "AI automation", href: "/services#automation" },
+      { label: "AI agents", href: "/services#agents" },
+      { label: "Custom software", href: "/services#software" },
+      { label: "Web & mobile", href: "/services#web" },
+      { label: "Data & integrations", href: "/services#data" },
+    ],
+  },
+  {
+    title: "Work",
+    links: [
+      { label: "Case studies", href: "/case-studies" },
+      { label: "SurgiSync", href: "/case-studies#surgisync" },
+      { label: "RevelTV", href: "/case-studies#reveltv" },
+      { label: "Simpla.AI", href: "/case-studies#simpla-ai" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "About", href: "/about" },
+      { label: "Process", href: "/#process" },
+      { label: "Insights", href: "/blog" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy policy", href: "/privacy-policy" },
+      { label: "Terms of service", href: "/terms-of-service" },
+      { label: "LinkedIn", href: SITE.linkedinUrl },
+    ],
+  },
+];
 
 export default function Footer() {
   return (
-    <footer className="relative bg-card border-t border-border/50 overflow-hidden">
-      {/* Background Grid */}
-      <div className="absolute inset-0 cyber-grid opacity-30 animate-grid-move" />
-      
-      {/* Gradient Overlay */}
-      <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-background to-transparent" />
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-        {/* Contact Section Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-2 mb-6">
-            <span className="h-2 w-2 rounded-full bg-gradient-to-r from-primary via-accent to-brand-cyan animate-pulse" />
-            <span className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-              Contact Us
-            </span>
-          </div>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            Let's Build <span className="gradient-text">Something Amazing</span>
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Ready to transform your business with AI and automation? Get in touch with our team.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          {/* Company Info */}
-          <div className="lg:col-span-1">
-            <Link to="/" className="inline-block mb-6">
-              <span className="font-display text-2xl font-bold gradient-text">TimeSquareLLC</span>
-            </Link>
-            <p className="text-muted-foreground text-sm mb-6">
-              Transforming businesses through intelligent AI solutions and cutting-edge automation technology.
+    <footer className="relative overflow-hidden border-t border-white/10 bg-[#07080a]">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-grid opacity-30" />
+      <Container className="relative">
+        <div className="grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-[1.35fr_.7fr_.7fr_.7fr_.7fr] lg:gap-10 lg:py-20">
+          <div className="max-w-[300px]">
+            <Logo />
+            <p className="mt-5 text-[13px] leading-[1.65] text-white/45">
+              AI automation, agents, and custom software for operations teams.
+              Built in England, working across time zones.
             </p>
-            <div className="flex gap-4">
+            <div className="mt-6 space-y-2.5 text-[12px] text-white/45">
               <a
-                href="https://www.linkedin.com/company/timesquarellc/"
+                href={`mailto:${SITE.email}`}
+                className="flex items-center gap-2 transition-colors hover:text-white/80"
+              >
+                <Mail size={13} strokeWidth={1.7} className="text-white/30" />
+                {SITE.email}
+              </a>
+              <p className="flex items-center gap-2">
+                <MapPin size={13} strokeWidth={1.7} className="text-white/30" />
+                {SITE.location}
+              </p>
+              <a
+                href={SITE.linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-secondary/50 border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300"
+                className="flex items-center gap-2 transition-colors hover:text-white/80"
               >
-                <Linkedin size={18} />
+                <Linkedin size={13} strokeWidth={1.7} className="text-white/30" />
+                LinkedIn
               </a>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-display text-sm font-semibold text-foreground mb-6 uppercase tracking-wider">
-              Quick Links
-            </h4>
-            <ul className="space-y-3">
-              {["Home", "About", "Services", "Case Studies", "Contact"].map((link) => (
-                <li key={link}>
-                  <Link
-                    to={link === "Home" ? "/" : `/${link.toLowerCase().replace(" ", "-")}`}
-                    className="text-muted-foreground hover:text-primary transition-colors duration-300 flex items-center gap-2 group"
-                  >
-                    <ArrowRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
-                    {link}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h4 className="font-display text-sm font-semibold text-foreground mb-6 uppercase tracking-wider">
-              Services
-            </h4>
-            <ul className="space-y-3">
-              {["AI Integration", "Process Automation", "Web Development", "Data Analytics"].map((service) => (
-                <li key={service}>
-                  <Link
-                    to="/services"
-                    className="text-muted-foreground hover:text-primary transition-colors duration-300 flex items-center gap-2 group"
-                  >
-                    <ArrowRight size={14} className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
-                    {service}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div>
-            <h4 className="font-display text-sm font-semibold text-foreground mb-6 uppercase tracking-wider">
-              Newsletter
-            </h4>
-            <p className="text-sm text-muted-foreground mb-4">
-              Get occasional updates on AI, automation, and new case studies.
-            </p>
-            <form
-              className="flex gap-2"
-              onSubmit={(event) => {
-                event.preventDefault();
-                window.location.href = "mailto:hello@timesquarellc.com?subject=Newsletter%20Signup";
-              }}
-            >
-              <input
-                type="email"
-                required
-                placeholder="Your email"
-                className="h-10 flex-1 rounded-lg border border-border bg-background px-3 text-sm"
-              />
-              <button type="submit" className="btn-gradient px-4 py-2 text-sm">
-                Subscribe
-              </button>
-            </form>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h4 className="font-display text-sm font-semibold text-foreground mb-6 uppercase tracking-wider">
-              Get in Touch
-            </h4>
-            <ul className="space-y-4">
-              <li>
-                <a
-                  href="mailto:hello@timesquarellc.com"
-                  className="flex items-start gap-3 text-muted-foreground hover:text-primary transition-colors duration-300"
-                >
-                  <Mail size={18} className="mt-0.5 text-primary" />
-                  <span className="text-sm">hello@timesquarellc.com</span>
-                </a>
-              </li>
-              <li>
-                <div className="flex items-start gap-3 text-muted-foreground">
-                  <MapPin size={18} className="mt-0.5 text-primary" />
-                  <span className="text-sm">
-                    Chafford Hundred<br />
-                    Grays, England
-                  </span>
-                </div>
-              </li>
-            </ul>
-          </div>
+          {columns.map((column) => (
+            <div key={column.title}>
+              <h3 className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/35">
+                {column.title}
+              </h3>
+              <ul className="mt-5 space-y-3">
+                {column.links.map((link) => {
+                  const external = /^https?:\/\//.test(link.href);
+                  return (
+                    <li key={link.label}>
+                      {external ? (
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group inline-flex items-center gap-1.5 text-[13px] text-white/50 transition-colors hover:text-white/85"
+                        >
+                          {link.label}
+                          <ArrowUpRight
+                            size={11}
+                            className="opacity-0 transition-all duration-300 group-hover:opacity-60"
+                          />
+                        </a>
+                      ) : (
+                        <Link
+                          to={link.href}
+                          className="group inline-flex items-center gap-1.5 text-[13px] text-white/50 transition-colors hover:text-white/85"
+                        >
+                          {link.label}
+                          <ArrowUpRight
+                            size={11}
+                            className="opacity-0 transition-all duration-300 group-hover:opacity-60"
+                          />
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} Timesquare LLC. All rights reserved.
+        <div className="flex flex-col gap-4 border-t border-white/10 py-6 text-[11px] text-white/35 sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {new Date().getFullYear()} {SITE.legalName}. All rights reserved.
           </p>
-          <div className="flex gap-6">
-            <Link to="/privacy-policy" className="text-muted-foreground text-sm hover:text-primary transition-colors">
-              Privacy Policy
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <span>Registered in England</span>
+            <Link to="/privacy-policy" className="transition-colors hover:text-white/70">
+              Privacy
             </Link>
-            <Link to="/terms-of-service" className="text-muted-foreground text-sm hover:text-primary transition-colors">
-              Terms of Service
+            <Link to="/terms-of-service" className="transition-colors hover:text-white/70">
+              Terms
             </Link>
           </div>
         </div>
-      </div>
+
+        <div aria-hidden="true" className="relative -mb-2 overflow-hidden pt-2">
+          <p className="footer-wordmark translate-y-[18%] text-center">TimeSquare</p>
+        </div>
+      </Container>
     </footer>
   );
 }

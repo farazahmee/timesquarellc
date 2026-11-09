@@ -1,82 +1,22 @@
-import { Target, Eye, Users, Award, Lightbulb, Rocket } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
-
-const values = [
-  {
-    icon: Lightbulb,
-    title: "Innovation First",
-    description: "We stay at the forefront of AI and automation technology to deliver cutting-edge solutions.",
-  },
-  {
-    icon: Users,
-    title: "Client Partnership",
-    description: "We work closely with our clients to understand their unique challenges and goals.",
-  },
-  {
-    icon: Award,
-    title: "Excellence",
-    description: "We hold ourselves to the highest standards in every project we undertake.",
-  },
-  {
-    icon: Rocket,
-    title: "Results Driven",
-    description: "Our focus is always on delivering measurable outcomes that drive business growth.",
-  },
-];
-
-const whyChooseUs = [
-  {
-    title: "Practitioners, Not Consultants",
-    description:
-      "We write the code ourselves. Every project gets senior engineers who have shipped AI systems to production.",
-  },
-  {
-    title: "Senior Engineers Only",
-    description:
-      "No juniors handed a spec. Your project lead has 5+ years of AI and full-stack delivery experience.",
-  },
-  {
-    title: "Proven AI Delivery",
-    description:
-      "7+ shipped projects processing real data for real businesses across healthcare, finance, and retail.",
-  },
-  {
-    title: "UK Team, Global Reach",
-    description:
-      "Based in England with timezone overlap for US and Middle East clients. Always available when you need us.",
-  },
-];
-
-const team = [
-  {
-    name: "Faraz",
-    role: "Founder & Lead Engineer",
-    description:
-      "Leads architecture and delivery across AI integration agency engagements, including ChatGPT integration services and cloud-native systems.",
-  },
-  {
-    name: "Aisha",
-    role: "Senior AI Engineer",
-    description:
-      "Builds LLM integration services, retrieval pipelines, and custom AI solutions for business workflows in regulated industries.",
-  },
-  {
-    name: "Daniel",
-    role: "Senior Full-Stack Engineer",
-    description:
-      "Owns frontend/backend implementation with React development services and Python FastAPI development for high-performance products.",
-  },
-  {
-    name: "Mariam",
-    role: "Automation & Data Engineer",
-    description:
-      "Designs business process automation and data analytics consulting pipelines with Airflow, Celery, and real-time integrations.",
-  },
-];
+import PageHero from "@/components/site/PageHero";
+import Container from "@/components/site/Container";
+import Reveal from "@/components/site/Reveal";
+import SectionHeading from "@/components/site/SectionHeading";
+import ButtonLink from "@/components/site/ButtonLink";
+import StatBand from "@/components/site/StatBand";
+import ClosingCTA from "@/components/site/ClosingCTA";
+import {
+  ABOUT_STATS,
+  PRINCIPLES,
+  TEAM,
+  TIMELINE,
+} from "@/content/site";
 
 export default function About() {
   useSEO({
-    title: "About TimeSquare LLC | AI Automation Experts | Our Team & Mission",
+    title:
+      "About TimeSquare LLC | AI Automation Experts | Our Team & Mission",
     description:
       "Meet the team behind TimeSquare LLC. We combine deep AI and full-stack development expertise with strategic vision to deliver AI automation solutions that drive real results.",
     canonical: "https://timesquarellc.com/about",
@@ -84,219 +24,162 @@ export default function About() {
 
   return (
     <div className="relative">
-      {/* Hero Section */}
-      <section className="relative py-24 lg:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 backdrop-blur-sm px-4 py-2 mb-8">
-              <span className="h-2 w-2 rounded-full bg-gradient-to-r from-primary via-accent to-brand-cyan animate-pulse" />
-              <span className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                About Us
-              </span>
-            </div>
-
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6">
-              Building the Future
-              <br />
-              <span className="gradient-text">Through AI Innovation</span>
-            </h1>
-
-            <p className="text-lg md:text-xl text-muted-foreground mb-8">
-              Timesquare LLC is a forward-thinking AI and automation agency dedicated to helping 
-              businesses harness the power of intelligent technology. We combine deep technical 
-              expertise with strategic vision to deliver solutions that drive real results.
-            </p>
-          </div>
+      <PageHero
+        eyebrow="About"
+        title={
+          <>
+            A small senior team, building{" "}
+            <span className="text-white/38">quietly useful AI.</span>
+          </>
+        }
+        lead="We started TimeSquare because the gap between an AI demo and a system a team actually uses every day was too wide. We work on the second part."
+      >
+        <div className="flex flex-wrap items-center gap-x-7 gap-y-4">
+          <ButtonLink to="/contact" variant="primary" size="lg" withArrow>
+            Talk to the team
+          </ButtonLink>
+          <ButtonLink to="/case-studies" variant="ghost" withArrow>
+            See the work
+          </ButtonLink>
         </div>
-      </section>
+      </PageHero>
 
-      {/* Mission & Vision */}
-      <section className="relative py-20 border-y border-border/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12">
-            {/* Mission */}
-            <div className="glass-card p-8 md:p-10">
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-6">
-                <Target className="w-7 h-7 text-primary" />
-              </div>
-              <h2 className="font-display text-2xl font-bold mb-4">Our Mission</h2>
-              <p className="text-muted-foreground">
-                To empower businesses with intelligent automation and AI solutions that enhance 
-                efficiency, drive innovation, and create sustainable competitive advantages. 
-                We believe every organization deserves access to transformative technology.
+      {/* Statement */}
+      <section className="section-tight">
+        <Container>
+          <div className="grid gap-10 border-t border-white/10 pt-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
+            <Reveal>
+              <p className="font-display text-[clamp(1.6rem,2.8vw,2.5rem)] font-medium leading-[1.22] tracking-[-0.035em] text-white/82">
+                Most AI projects fail in the last mile: the handoff, the
+                exception, the person who has to trust the output.{" "}
+                <span className="text-white/38">
+                  That is the part we build for.
+                </span>
               </p>
-            </div>
-
-            {/* Vision */}
-            <div className="glass-card p-8 md:p-10">
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent/20 to-brand-cyan/20 flex items-center justify-center mb-6">
-                <Eye className="w-7 h-7 text-accent" />
-              </div>
-              <h2 className="font-display text-2xl font-bold mb-4">Our Vision</h2>
-              <p className="text-muted-foreground">
-                To be the leading partner for businesses seeking to integrate AI and automation 
-                into their operations. We envision a future where intelligent systems work 
-                seamlessly alongside humans to achieve extraordinary outcomes.
+            </Reveal>
+            <Reveal delay={100} className="space-y-5">
+              <p className="body-copy">
+                We are a compact team of senior engineers based in England,
+                working with operations teams across the UK, US, and Middle
+                East. We scope the work ourselves and write the code ourselves.
               </p>
-            </div>
+              <p className="body-copy">
+                Our projects tend to sit where the work is high-volume,
+                document-heavy, and expensive to get wrong: healthcare,
+                finance, retail operations, and digital signage. The pattern is
+                usually the same — a process held together by spreadsheets,
+                email, and one person who knows how it really works.
+              </p>
+              <p className="body-copy">
+                We replace the fragile parts, keep the judgement, and leave
+                behind a system your team can run without us.
+              </p>
+            </Reveal>
           </div>
-        </div>
+        </Container>
       </section>
 
-      {/* Values Section */}
-      <section className="relative py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-2 mb-6">
-              <span className="h-2 w-2 rounded-full bg-gradient-to-r from-primary via-accent to-brand-cyan" />
-              <span className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                Our Values
-              </span>
-            </div>
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-              What <span className="gradient-text">Drives Us</span>
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Our core values guide every decision we make and every project we deliver.
-            </p>
-          </div>
+      {/* Principles */}
+      <section className="section border-y border-white/10 bg-[#090b0e]">
+        <Container>
+          <SectionHeading
+            eyebrow="Principles"
+            title={
+              <>
+                How we work,{" "}
+                <span className="text-white/38">in four lines.</span>
+              </>
+            }
+            lead="These are the rules we use to make the hundred small decisions that do not fit in a statement of work."
+          />
 
-          {/* Values Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value, index) => (
-              <div
-                key={value.title}
-                className="group glass-card p-6 hover:border-primary/50 transition-all duration-500 text-center"
+          <div className="mt-12 grid gap-4 sm:grid-cols-2">
+            {PRINCIPLES.map((principle, index) => (
+              <Reveal key={principle.title} delay={index * 70}>
+                <article className="glass card-lift flex h-full flex-col p-6 md:p-7">
+                  <span className="font-mono text-[10px] tracking-[0.12em] text-white/28">
+                    0{index + 1}
+                  </span>
+                  <h3 className="display-3 mt-8">{principle.title}</h3>
+                  <p className="body-copy mt-3">{principle.description}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* Team */}
+      <section className="section">
+        <Container>
+          <SectionHeading
+            eyebrow="The team"
+            title={
+              <>
+                The people who{" "}
+                <span className="text-white/38">build it.</span>
+              </>
+            }
+            lead="No account managers, no handoff to a delivery pod. The people in the first call are the people in the codebase."
+          />
+
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {TEAM.map((member, index) => (
+              <Reveal key={member.name} delay={index * 70}>
+                <article className="glass card-lift flex h-full flex-col p-6">
+                  <span className="grid h-14 w-14 place-items-center rounded-full border border-white/10 bg-gradient-to-br from-ice/[0.12] to-indigo/20 font-display text-[17px] font-medium text-white/80">
+                    {member.initials}
+                  </span>
+                  <h3 className="display-4 mt-7">{member.name}</h3>
+                  <p className="mt-1.5 font-mono text-[9px] uppercase tracking-[0.1em] text-ice/60">
+                    {member.role}
+                  </p>
+                  <p className="body-copy mt-4 flex-1">{member.description}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* Timeline */}
+      <section className="section border-y border-white/10 bg-[#090b0e]">
+        <Container>
+          <SectionHeading
+            eyebrow="Timeline"
+            title={
+              <>
+                A short history of{" "}
+                <span className="text-white/38">shipping quietly.</span>
+              </>
+            }
+          />
+          <div className="mt-12 grid gap-px overflow-hidden rounded-[14px] border border-white/10 bg-white/10 md:grid-cols-5">
+            {TIMELINE.map((item, index) => (
+              <Reveal
+                key={item.year}
+                delay={index * 60}
+                className="bg-[#090b0e] p-5"
               >
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
-                  <value.icon className="w-7 h-7 text-primary" />
-                </div>
-                <h3 className="font-display text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
-                  {value.title}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {value.description}
+                <p className="font-mono text-[10px] tracking-[0.12em] text-ice/60">
+                  {item.year}
                 </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
-      <section className="relative py-24 border-t border-border/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-2 mb-6">
-              <span className="h-2 w-2 rounded-full bg-gradient-to-r from-primary via-accent to-brand-cyan" />
-              <span className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                Why Choose Us
-              </span>
-            </div>
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-              Built for <span className="gradient-text">Real Delivery</span>
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              We are an AI integration agency focused on outcomes, not slide decks.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {whyChooseUs.map((item) => (
-              <div
-                key={item.title}
-                className="glass-card p-6 group hover:border-primary/50 transition-all duration-500"
-              >
-                <h3 className="font-display text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {item.description}
+                <p className="mt-3 text-[13px] leading-[1.6] text-white/50">
+                  {item.event}
                 </p>
-              </div>
+              </Reveal>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
-      {/* Team Section */}
-      <section className="relative py-24 border-t border-border/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-2 mb-6">
-              <span className="h-2 w-2 rounded-full bg-gradient-to-r from-primary via-accent to-brand-cyan" />
-              <span className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                Our Team
-              </span>
-            </div>
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-              Senior <span className="gradient-text">Engineers</span>
-            </h2>
-            <p className="text-muted-foreground max-w-3xl mx-auto">
-              We are a tight-knit team of senior engineers, data scientists, and automation specialists.
-              Every team member has at least 5 years of industry experience.
-            </p>
-          </div>
-
-          <div className="glass-card p-6 md:p-8 mb-8">
-            <div className="flex flex-col md:flex-row items-start gap-6">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center text-xl font-semibold">
-                F
-              </div>
-              <div>
-                <h3 className="font-display text-2xl font-semibold mb-1">Faraz</h3>
-                <p className="text-primary text-sm mb-3">Founder & Lead Engineer</p>
-                <p className="text-muted-foreground">
-                  Leads solution architecture, AI consulting UK engagements, and enterprise-grade delivery
-                  across custom AI solutions for business, automation, and platform engineering.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {team.slice(1).map((member) => (
-              <div key={member.name} className="glass-card p-6 group hover:border-primary/50 transition-all duration-500">
-                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center mb-4">
-                  <Users className="w-7 h-7 text-primary/80" />
-                </div>
-                <h3 className="font-display text-lg font-semibold mb-1 group-hover:text-primary transition-colors">
-                  {member.name}
-                </h3>
-                <p className="text-primary text-xs uppercase tracking-widest mb-3">{member.role}</p>
-                <p className="text-sm text-muted-foreground">{member.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+      <section className="section-tight">
+        <Container>
+          <StatBand stats={ABOUT_STATS} />
+        </Container>
       </section>
 
-      {/* Company Timeline */}
-      <section className="relative py-24 border-t border-border/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-              Company <span className="gradient-text">Timeline</span>
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-5 gap-4">
-            {[
-              { year: "2020", event: "Founded in Grays, England" },
-              { year: "2021", event: "First AI integration project shipped" },
-              { year: "2022", event: "Expanded into healthcare and finance sectors" },
-              { year: "2023", event: "3,000+ end users impacted through RevelTV" },
-              { year: "2024", event: "Serving clients across UK, US, and Middle East" },
-            ].map((item) => (
-              <article key={item.year} className="glass-card p-5">
-                <p className="text-primary text-sm font-semibold mb-2">{item.year}</p>
-                <p className="text-sm text-muted-foreground">{item.event}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ClosingCTA />
     </div>
   );
 }

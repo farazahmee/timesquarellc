@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420" fill="none">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="42%" r="70%">
+      <stop offset="0%" stop-color="#161b24"/>
+      <stop offset="58%" stop-color="#0b0e14"/>
+      <stop offset="100%" stop-color="#080a0e"/>
+    </radialGradient>
+    <radialGradient id="ice-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#acceef" stop-opacity="0.22"/>
+      <stop offset="60%" stop-color="#3771c8" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#080a0e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f1420"/>
+      <stop offset="32%" stop-color="#587393"/>
+      <stop offset="50%" stop-color="#dcecff"/>
+      <stop offset="68%" stop-color="#617c9e"/>
+      <stop offset="100%" stop-color="#111624"/>
+    </linearGradient>
+    <linearGradient id="metal-soft" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#283148"/>
+      <stop offset="45%" stop-color="#8fabca"/>
+      <stop offset="65%" stop-color="#dcecff"/>
+      <stop offset="100%" stop-color="#1a2032"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f4f9ff" stop-opacity="0.2"/>
+      <stop offset="45%" stop-color="#acceef" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#3771c8" stop-opacity="0.14"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="16"/>
+    </filter>
+    <filter id="tiny" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" stroke="#ffffff" stroke-opacity="0.035" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="640" height="420" fill="url(#bg)"/>
+  <rect width="640" height="420" fill="url(#grid)" opacity="0.7"/>
+  <ellipse cx="320" cy="206" rx="250" ry="190" fill="url(#ice-glow)" filter="url(#soft)"/>
+  
+  <g transform="translate(320 212) rotate(-7)">
+    <rect x="-148" y="-116" width="296" height="220" rx="18" fill="#0a0d13" stroke="#ffffff" stroke-opacity="0.08"/>
+    <g opacity="0.9">
+      <rect x="-148" y="54" width="296" height="50" rx="18" fill="url(#metal)" opacity="0.34"/>
+      <rect x="-134" y="-92" width="268" height="112" rx="12" fill="url(#glass)" stroke="#dcecff" stroke-opacity="0.14"/>
+      <rect x="-134" y="-92" width="268" height="24" rx="12" fill="#ffffff" fill-opacity="0.03"/>
+      <circle cx="-116" cy="-80" r="3" fill="#acceef" opacity="0.7"/>
+      <circle cx="-104" cy="-80" r="3" fill="#ffffff" opacity="0.2"/>
+      <circle cx="-92" cy="-80" r="3" fill="#ffffff" opacity="0.2"/>
+      <rect x="-116" y="-48" width="96" height="7" rx="3.5" fill="#dcecff" opacity="0.5"/>
+      <rect x="-116" y="-31" width="148" height="5" rx="2.5" fill="#ffffff" opacity="0.14"/>
+      <rect x="-116" y="-20" width="120" height="5" rx="2.5" fill="#ffffff" opacity="0.1"/>
+      <rect x="8" y="-48" width="112" height="66" rx="7" fill="#acceef" fill-opacity="0.08" stroke="#acceef" stroke-opacity="0.16"/>
+      <rect x="20" y="-32" width="52" height="5" rx="2.5" fill="#dcecff" opacity="0.55"/>
+      <rect x="20" y="-20" width="84" height="4" rx="2" fill="#ffffff" opacity="0.16"/>
+      <rect x="-116" y="-2" width="70" height="5" rx="2.5" fill="#ffffff" opacity="0.12"/>
+    </g>
+    <rect x="-122" y="42" width="244" height="46" rx="10" fill="url(#metal)" opacity="0.24" stroke="#ffffff" stroke-opacity="0.08"/>
+    <rect x="-120" y="108" width="240" height="46" rx="10" fill="url(#metal)" opacity="0.14" stroke="#ffffff" stroke-opacity="0.06"/>
+    <rect x="-104" y="56" width="76" height="5" rx="2.5" fill="#dcecff" opacity="0.4"/>
+    <rect x="-104" y="69" width="120" height="4" rx="2" fill="#ffffff" opacity="0.12"/>
+  </g>
+  <g fill="#dcecff">
+    <circle cx="158" cy="118" r="2" opacity="0.4"/>
+    <circle cx="500" cy="304" r="1.6" opacity="0.35"/>
+  </g>
+
+  <rect width="640" height="420" fill="url(#bg)" opacity="0.06"/>
+</svg>

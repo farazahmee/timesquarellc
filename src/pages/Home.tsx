@@ -1,188 +1,44 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  ArrowRight,
-  Bot,
-  ChevronDown,
-  Code2,
-  LayoutDashboard,
-  Smartphone,
-  Workflow,
+  ArrowUpRight,
+  Check,
+  HeartPulse,
+  Landmark,
+  ShoppingBag,
+  Truck,
 } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
-import AnimatedSection from "@/components/ui/AnimatedSection";
+import Container from "@/components/site/Container";
+import Eyebrow from "@/components/site/Eyebrow";
+import Reveal from "@/components/site/Reveal";
+import ButtonLink from "@/components/site/ButtonLink";
+import Marquee from "@/components/site/Marquee";
+import SectionHeading from "@/components/site/SectionHeading";
+import FaqAccordion from "@/components/site/FaqAccordion";
+import DashboardMock from "@/components/site/DashboardMock";
+import ClosingCTA from "@/components/site/ClosingCTA";
+import {
+  BUILD_TABS,
+  CAPABILITIES,
+  CLIENTS,
+  FAQS,
+  HERO,
+  INDUSTRIES,
+  OUTCOMES,
+  PROCESS,
+  STATS,
+  TECH,
+  TESTIMONIALS,
+} from "@/content/site";
+import { cn } from "@/lib/utils";
 
-const services = [
-  {
-    icon: Workflow,
-    title: "AI Automation for Operations",
-    description:
-      "We map the repetitive work inside your team - approvals, data entry, reporting, follow-ups - and replace it with pipelines that run unattended and alert a human only when something needs a decision.",
-  },
-  {
-    icon: Bot,
-    title: "AI Chatbots & Voice Agents",
-    description:
-      "Support, qualification, and booking agents grounded in your own documents and systems. Every conversation is logged, and low-confidence answers hand off to your team instead of guessing.",
-  },
-  {
-    icon: Code2,
-    title: "Custom Software Development",
-    description:
-      "Production systems built around how your business actually operates. Python and FastAPI or Django on the backend, React on the front, deployed to your cloud with monitoring from day one.",
-  },
-  {
-    icon: Smartphone,
-    title: "Web & Mobile Apps",
-    description:
-      "Customer-facing apps and conversion-focused landing pages built for speed, search visibility, and clean analytics - so you can see which pages earn revenue.",
-  },
-  {
-    icon: LayoutDashboard,
-    title: "CRM & Internal Tools",
-    description:
-      "Dashboards, admin panels, and CRM integrations that put your team's daily work in one place instead of five tabs and a shared spreadsheet.",
-  },
-];
-
-type CaseStudy = {
-  title: string;
-  category: string;
-  /** Only set where we have a client-reported figure we can stand behind. */
-  metric?: string;
-  metricLabel: string;
-  summary: string;
-  tech: string;
-  image: string;
+const industryIcons = {
+  health: HeartPulse,
+  finance: Landmark,
+  retail: ShoppingBag,
+  logistics: Truck,
 };
-
-const caseStudies: CaseStudy[] = [
-  {
-    title: "SurgiSync",
-    category: "Healthcare",
-    metric: "35%",
-    metricLabel: "higher surgical list accuracy",
-    summary:
-      "Real-time collaboration platform for surgical teams. Live list sync over WebSocket and Redis lifted team efficiency by 50%, and role-based access with OAuth 2.0 cut unauthorised access by 80%.",
-    tech: "WebSocket, Redis, OAuth 2.0",
-    image: "/case-studies/surgisync.svg",
-  },
-  {
-    title: "RevelTV",
-    category: "Digital signage",
-    metric: "3,000+",
-    metricLabel: "clients served on the platform",
-    summary:
-      "Nationwide signage network with automated content operations and containerised deployments across automotive, corporate, and retail sites.",
-    tech: "Django, Vue.js, Docker, Kubernetes",
-    image: "/case-studies/reveltv.svg",
-  },
-  {
-    title: "Simpla.AI",
-    category: "Finance",
-    metricLabel:
-      "Manual tax document review replaced by automated AI validation and guidance.",
-    summary:
-      "Tax and accounting platform combining LLM-driven guidance, document validation, and analytics dashboards so finance teams reach compliant decisions faster.",
-    tech: "Django REST Framework, Python, AWS",
-    image: "/case-studies/simpla.svg",
-  },
-];
-
-const processSteps = [
-  {
-    title: "Discovery",
-    description:
-      "One session to map your workflows and find where the manual hours actually go. You leave with a shortlist of what is worth automating first.",
-  },
-  {
-    title: "Architecture",
-    description:
-      "A scoped build plan with a fixed stack, timeline, and cost. No over-engineering, no surprises. You approve it before we write code.",
-  },
-  {
-    title: "Build & Iterate",
-    description:
-      "Weekly sprints with working demos. You see the system running against your real data long before launch day.",
-  },
-  {
-    title: "Deploy & Support",
-    description:
-      "We deploy to your cloud, wire up monitoring, and stay on after launch to tune it as usage grows.",
-  },
-];
-
-const technologies = [
-  "Python",
-  "FastAPI",
-  "Django",
-  "React",
-  "Next.js",
-  "Node.js",
-  "OpenAI",
-  "LangChain",
-  "PostgreSQL",
-  "AWS",
-  "Docker",
-  "Kubernetes",
-];
-
-const testimonials = [
-  {
-    quote:
-      "TimeSquare built an AI-powered coaching system that reduced our client response time by 60%. Their ChatGPT integration was seamless.",
-    name: "Sarah Mitchell",
-    role: "CEO",
-    company: "A-Plan Coaching",
-  },
-  {
-    quote:
-      "The real-time surgical collaboration tool they built improved our list accuracy by 35%. Their WebSocket expertise was exactly what we needed.",
-    name: "Dr. James Chen",
-    role: "Lead Surgeon",
-    company: "SurgiSync",
-  },
-  {
-    quote:
-      "They automated our entire content pipeline serving 3,000+ clients. Rock-solid reliability across our nationwide digital signage network.",
-    name: "Michael Torres",
-    role: "CTO",
-    company: "RevelTV",
-  },
-];
-
-const faqs = [
-  {
-    question: "What types of AI solutions do you build?",
-    answer:
-      "We specialize in LLM integrations (ChatGPT, GPT-4), natural language processing, computer vision, chatbot development, and machine learning models like churn prediction. We focus on practical AI that solves real business problems - not AI for AI's sake.",
-  },
-  {
-    question: "How long does a typical project take?",
-    answer:
-      "Most projects range from 4-12 weeks depending on complexity. A chatbot or API integration might take 4-6 weeks, while a full-stack platform with AI features typically takes 8-12 weeks. We provide detailed timelines after our discovery phase.",
-  },
-  {
-    question: "Do you work with businesses outside the UK?",
-    answer:
-      "Yes - we serve clients across the UK, US, and Middle East. Our team has timezone flexibility to overlap with US Eastern and Gulf time zones for smooth collaboration.",
-  },
-  {
-    question: "What is your tech stack?",
-    answer:
-      "We primarily work with Python (FastAPI, Django), React/Next.js, Node.js, PostgreSQL, MongoDB, AWS, Docker, and Kubernetes. For AI, we use OpenAI APIs, LangChain, TensorFlow, and custom ML pipelines with tools like Apache Airflow.",
-  },
-  {
-    question: "How much does an AI integration project cost?",
-    answer:
-      "Project costs vary based on scope and complexity. A focused AI integration might start from GBP 5,000, while a full-stack platform with multiple AI features could range from GBP 15,000-50,000+. We provide detailed quotes after a free consultation.",
-  },
-  {
-    question: "Do you provide ongoing support after launch?",
-    answer:
-      "Yes - every project includes post-launch support. We offer maintenance packages for ongoing monitoring, updates, and optimization.",
-  },
-];
 
 export default function Home() {
   useSEO({
@@ -192,333 +48,458 @@ export default function Home() {
     canonical: "https://timesquarellc.com",
   });
 
-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
-  const initials = useMemo(
-    () => testimonials.map((item) => item.name.split(" ").map((p) => p[0]).join("")),
-    [],
-  );
+  const [activeTab, setActiveTab] = useState(BUILD_TABS[0]);
 
   return (
     <div className="relative">
-      <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster="/videos/hero-poster.svg"
-            className="w-full h-full object-cover opacity-25"
-          >
-            <source src="/videos/hero-bg-compressed.mp4" type="video/mp4" />
-            <source src="/videos/hero-bg.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/75 to-background" />
-          <div
-            className="absolute inset-x-0 top-0 h-[70vh]"
-            style={{ background: "var(--gradient-glow)" }}
-          />
+      {/* ---------------- Hero ---------------- */}
+      <section className="relative overflow-hidden pb-16 pt-36 sm:pt-40 lg:pb-20 lg:pt-44">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-grid opacity-70" />
+          <div className="absolute -right-[28%] top-[-12%] w-[105%] max-w-[1100px] opacity-65 sm:-right-[14%] sm:w-[80%] lg:right-[-2%] lg:top-[-16%] lg:w-[68%] lg:opacity-90">
+            <img
+              src="/art/hero-ribbon.svg"
+              alt=""
+              className="h-auto w-full animate-float-slow"
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#08090b] via-[#08090b]/88 to-[#08090b]/10" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#08090b] to-transparent" />
         </div>
 
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-28 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/40 backdrop-blur-sm px-4 py-2 mb-8">
-            <span className="h-2 w-2 rounded-full bg-gradient-to-r from-primary to-brand-cyan animate-pulse" />
-            <span className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-              AI automation &amp; software studio - UK based, working globally
-            </span>
+        <Container className="relative">
+          <div className="max-w-[780px]">
+            <Reveal>
+              <Eyebrow>{HERO.eyebrow}</Eyebrow>
+            </Reveal>
+            <Reveal delay={80}>
+              <h1 className="display-1 mt-8">
+                {HERO.titleLead}{" "}
+                <span className="text-white/38">{HERO.titleMuted}</span>{" "}
+                {HERO.titleTail}
+              </h1>
+            </Reveal>
+            <Reveal delay={160}>
+              <p className="lead mt-7 max-w-[560px]">{HERO.lead}</p>
+            </Reveal>
+            <Reveal delay={230}>
+              <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
+                <ButtonLink to="/contact" variant="primary" size="lg" withArrow>
+                  {HERO.primaryCta}
+                </ButtonLink>
+                <ButtonLink to="/case-studies" variant="ghost" withArrow>
+                  {HERO.secondaryCta}
+                </ButtonLink>
+              </div>
+            </Reveal>
+            <Reveal delay={300}>
+              <p className="mt-11 font-mono text-[10px] uppercase tracking-[0.15em] text-white/30">
+                {HERO.footnote}
+              </p>
+            </Reveal>
           </div>
 
-          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
-            We build AI systems that{" "}
-            <span className="gradient-text">take the manual work off your team</span>
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
-            Automation, chatbots, and custom software for growing operations teams.
-            Scoped in a week, in production in 4 to 12 weeks, supported after launch.
-          </p>
-
-          <div className="flex flex-col items-center gap-5">
-            <Link
-              to="/contact"
-              className="btn-gradient inline-flex items-center gap-2 group text-base"
-            >
-              Book a free consultation
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link
-              to="/case-studies"
-              className="text-sm text-muted-foreground hover:text-primary transition-colors"
-            >
-              Or see what we have shipped
-            </Link>
-          </div>
-
-          <p className="mt-12 text-xs uppercase tracking-[0.2em] text-muted-foreground/70">
-            Healthcare &middot; Finance &middot; Retail &middot; Digital signage &middot; Coaching
-          </p>
-        </div>
+          <Reveal delay={380} className="mt-16 lg:mt-24">
+            <div className="grid border-t border-white/10 pt-7 sm:grid-cols-3 sm:gap-8">
+              {STATS.map((stat) => (
+                <div key={stat.label} className="flex items-baseline gap-3 py-2">
+                  <span className="shrink-0 whitespace-nowrap font-display text-[2.35rem] font-medium leading-none tracking-[-0.05em] text-white/90">
+                    {stat.value}
+                  </span>
+                  <span className="font-mono text-[10px] uppercase leading-[1.45] tracking-[0.14em] text-white/35">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        </Container>
       </section>
 
-      <AnimatedSection>
-        <section className="relative py-24 border-y border-border/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-2xl mb-14">
-              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                What we <span className="gradient-text">build</span>
-              </h2>
-              <p className="text-muted-foreground">
-                Five things, done properly. If your problem is not on this list, we will tell
-                you and point you somewhere useful.
-              </p>
-            </div>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {services.map((service) => (
-                <article
-                  key={service.title}
-                  className="group glass-card p-7 hover:border-primary/50 transition-all duration-500"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform duration-300">
-                    <service.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <h3 className="font-display text-lg font-semibold mb-3 group-hover:text-primary transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground">
-                    {service.description}
-                  </p>
-                </article>
-              ))}
-              <article className="glass-card gradient-border p-7 flex flex-col justify-center">
-                <h3 className="font-display text-lg font-semibold mb-3">
-                  Not sure which one you need?
-                </h3>
-                <p className="text-sm text-muted-foreground mb-5">
-                  Most teams start with one automation, prove the time saved, then expand.
-                  We will help you pick the first one.
-                </p>
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
-                >
-                  Talk it through
-                  <ArrowRight size={16} />
-                </Link>
-              </article>
-            </div>
+      {/* ---------------- Client strip ---------------- */}
+      <section className="border-y border-white/10 bg-white/[0.012] py-5">
+        <Container>
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-8">
+            <p className="meta-label shrink-0">Trusted by teams at</p>
+            <Marquee
+              items={CLIENTS}
+              className="flex-1"
+              itemClassName="text-[14px] text-white/40"
+            />
           </div>
-        </section>
-      </AnimatedSection>
+        </Container>
+      </section>
 
-      <AnimatedSection>
-        <section className="relative py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
-              <div className="max-w-2xl">
-                <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                  Work that <span className="gradient-text">moved a number</span>
-                </h2>
-                <p className="text-muted-foreground">
-                  Every figure below was reported by the client after launch.
-                </p>
+      {/* ---------------- Capabilities ---------------- */}
+      <section id="capabilities" className="section">
+        <Container>
+          <div className="flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
+            <SectionHeading
+              eyebrow="What we build"
+              title={
+                <>
+                  Four ways we remove{" "}
+                  <span className="text-white/38">manual work.</span>
+                </>
+              }
+              lead="Start with one workflow. Prove the time saved. Then expand into the rest of the operation."
+            />
+            <ButtonLink
+              to="/services"
+              variant="secondary"
+              withArrow
+              className="hidden md:inline-flex"
+            >
+              Explore services
+            </ButtonLink>
+          </div>
+
+          <div className="mt-12 grid gap-4 sm:grid-cols-2">
+            {CAPABILITIES.map((capability, index) => (
+              <Reveal key={capability.title} delay={index * 70}>
+                <Link
+                  to={capability.href}
+                  className="group glass card-lift flex h-full flex-col overflow-hidden"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden border-b border-white/[0.07]">
+                    <img
+                      src={capability.art}
+                      alt=""
+                      aria-hidden="true"
+                      loading="lazy"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.035]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0b0d11] via-[#0b0d11]/10 to-transparent" />
+                    <span className="absolute left-5 top-5 font-mono text-[10px] tracking-[0.12em] text-white/40">
+                      {capability.number}
+                    </span>
+                    <span className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full border border-white/12 bg-black/25 text-white/65 opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100">
+                      <ArrowUpRight size={14} strokeWidth={1.8} />
+                    </span>
+                  </div>
+                  <div className="flex flex-1 flex-col p-6">
+                    <h3 className="display-4">{capability.title}</h3>
+                    <p className="body-copy mt-3 flex-1">{capability.description}</p>
+                    <div className="mt-5 flex flex-wrap gap-1.5">
+                      {capability.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-[5px] border border-white/10 bg-white/[0.025] px-2 py-1 font-mono text-[9px] uppercase tracking-[0.08em] text-white/38"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ---------------- Inside a build ---------------- */}
+      <section className="section border-y border-white/10 bg-[#090b0e]">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-start lg:gap-14">
+            <div className="lg:sticky lg:top-28">
+              <SectionHeading
+                eyebrow="Inside a build"
+                title={
+                  <>
+                    One system,{" "}
+                    <span className="text-white/38">three ways in.</span>
+                  </>
+                }
+                lead="Every engagement starts with the same question: what is the smallest system that removes the most manual work?"
+              />
+
+              <div
+                role="tablist"
+                aria-label="Ways to work with TimeSquare"
+                className="mt-8 flex flex-wrap gap-1.5"
+              >
+                {BUILD_TABS.map((tab) => {
+                  const selected = activeTab.id === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      role="tab"
+                      id={`tab-${tab.id}`}
+                      aria-selected={selected}
+                      aria-controls={`panel-${tab.id}`}
+                      onClick={() => setActiveTab(tab)}
+                      className={cn(
+                        "h-8 rounded-[7px] border px-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-all duration-300",
+                        selected
+                          ? "border-white/20 bg-white/[0.07] text-white/90"
+                          : "border-transparent text-white/38 hover:text-white/70",
+                      )}
+                    >
+                      {tab.label}
+                    </button>
+                  );
+                })}
               </div>
-              <Link to="/case-studies" className="hidden md:inline-flex text-primary hover:underline">
-                View all projects
-              </Link>
+
+              <div
+                role="tabpanel"
+                id={`panel-${activeTab.id}`}
+                aria-labelledby={`tab-${activeTab.id}`}
+                className="mt-8"
+              >
+                <h3 className="display-3">{activeTab.title}</h3>
+                <p className="body-copy mt-4">{activeTab.description}</p>
+                <ul className="mt-6 space-y-3">
+                  {activeTab.bullets.map((bullet) => (
+                    <li key={bullet} className="flex items-start gap-3 text-[14px] text-white/58">
+                      <span className="mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full border border-ice/20 bg-ice/[0.06] text-ice/80">
+                        <Check size={9} strokeWidth={2.4} />
+                      </span>
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-8 flex items-baseline gap-3 border-t border-white/10 pt-5">
+                  <span className="font-display text-[2rem] font-medium leading-none tracking-[-0.045em] text-white/90">
+                    {activeTab.metric.value}
+                  </span>
+                  <span className="max-w-[230px] font-mono text-[9px] uppercase leading-[1.5] tracking-[0.1em] text-white/35">
+                    {activeTab.metric.label}
+                  </span>
+                </div>
+              </div>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-3">
-              {caseStudies.map((study) => (
+            <Reveal direction="right" className="lg:pt-7">
+              <DashboardMock tab={activeTab} />
+              <p className="mt-4 text-right font-mono text-[9px] uppercase tracking-[0.12em] text-white/25">
+                Illustrative interface · real build scoped to your stack
+              </p>
+            </Reveal>
+          </div>
+        </Container>
+      </section>
+
+      {/* ---------------- Process ---------------- */}
+      <section id="process" className="section">
+        <Container>
+          <SectionHeading
+            eyebrow="How we work"
+            title={
+              <>
+                From first call to{" "}
+                <span className="text-white/38">running system.</span>
+              </>
+            }
+            lead="Four steps, no black boxes. You approve the scope and the cost before anything gets built."
+          />
+
+          <div className="mt-14 grid gap-px overflow-hidden rounded-[14px] border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+            {PROCESS.map((step, index) => (
+              <Reveal
+                key={step.number}
+                delay={index * 70}
+                className="bg-[#090b0e] p-6"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <span className="font-mono text-[10px] tracking-[0.12em] text-white/28">
+                    {step.number}
+                  </span>
+                  <span className="font-mono text-[8px] uppercase tracking-[0.1em] text-ice/45">
+                    {step.output}
+                  </span>
+                </div>
+                <h3 className="display-4 mt-10">{step.title}</h3>
+                <p className="body-copy mt-3">{step.description}</p>
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-6 md:flex-row md:items-center md:gap-8">
+            <p className="meta-label shrink-0">Built with</p>
+            <Marquee
+              items={TECH}
+              reverse
+              className="flex-1"
+              itemClassName="font-mono text-[10px] uppercase tracking-[0.1em] text-white/32"
+            />
+          </div>
+        </Container>
+      </section>
+
+      {/* ---------------- Outcomes ---------------- */}
+      <section className="section border-y border-white/10 bg-[#090b0e]">
+        <Container>
+          <SectionHeading
+            eyebrow="Selected work"
+            title={
+              <>
+                Work that moved{" "}
+                <span className="text-white/38">a number.</span>
+              </>
+            }
+            lead="Every figure below was reported by the client after launch."
+            actions={
+              <ButtonLink to="/case-studies" variant="secondary" withArrow>
+                All case studies
+              </ButtonLink>
+            }
+          />
+
+          <div className="mt-12 grid gap-4 md:grid-cols-3">
+            {OUTCOMES.map((outcome, index) => (
+              <Reveal key={outcome.client} delay={index * 80}>
                 <Link
                   to="/case-studies"
-                  key={study.title}
-                  className="glass-card overflow-hidden group hover:border-primary/50 transition-all duration-500 flex flex-col"
+                  className="group glass card-lift flex h-full flex-col p-6"
                 >
-                  <img
-                    src={study.image}
-                    alt={`${study.title} case study`}
-                    className="h-36 w-full object-cover"
-                    loading="lazy"
-                    width={640}
-                    height={288}
-                  />
-                  <div className="p-7 flex flex-col flex-1">
-                    <p className="text-xs uppercase tracking-wider text-accent mb-4">
-                      {study.category}
-                    </p>
-
-                    {study.metric ? (
-                      <div className="mb-5">
-                        <div className="font-display text-4xl lg:text-5xl font-bold gradient-text leading-none mb-2">
-                          {study.metric}
-                        </div>
-                        <p className="text-sm text-foreground/90">{study.metricLabel}</p>
-                      </div>
-                    ) : (
-                      <p className="text-sm text-foreground/90 mb-5">{study.metricLabel}</p>
-                    )}
-
-                    <h3 className="font-display text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
-                      {study.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-5 flex-1">{study.summary}</p>
-                    <p className="text-xs text-muted-foreground/80">{study.tech}</p>
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="meta-label">{outcome.category}</span>
+                    <ArrowUpRight
+                      size={15}
+                      strokeWidth={1.7}
+                      className="text-white/25 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white/70"
+                    />
                   </div>
+                  <p className="mt-8 font-display text-[3.1rem] font-medium leading-none tracking-[-0.055em] text-white/92">
+                    {outcome.metric}
+                  </p>
+                  <p className="mt-2 text-[13px] text-white/55">{outcome.label}</p>
+                  <div className="mt-7 flex-1 border-t border-white/10 pt-5">
+                    <h3 className="display-4">{outcome.client}</h3>
+                    <p className="body-copy mt-2">{outcome.description}</p>
+                  </div>
+                  <p className="mt-5 font-mono text-[8.5px] uppercase tracking-[0.1em] text-white/28">
+                    {outcome.tech}
+                  </p>
                 </Link>
-              ))}
-            </div>
-
-            <div className="mt-8 md:hidden">
-              <Link to="/case-studies" className="inline-flex text-primary hover:underline">
-                View all projects
-              </Link>
-            </div>
+              </Reveal>
+            ))}
           </div>
-        </section>
-      </AnimatedSection>
+        </Container>
+      </section>
 
-      <AnimatedSection>
-        <section className="relative py-24 border-y border-border/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-12">
-              What clients <span className="gradient-text">say</span>
-            </h2>
-            <div className="grid gap-6 md:grid-cols-3">
-              {testimonials.map((item, index) => (
-                <article key={item.name} className="glass-card p-7">
-                  {/* TODO: Replace with real, permissioned client testimonials before launch. */}
-                  <p className="text-sm leading-relaxed text-muted-foreground mb-6">
-                    &ldquo;{item.quote}&rdquo;
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-full bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center text-sm font-semibold text-foreground">
-                      {initials[index]}
-                    </div>
-                    <div>
-                      <p className="font-semibold text-sm">{item.name}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {item.role}, {item.company}
-                      </p>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
+      {/* ---------------- Testimonials ---------------- */}
+      <section className="section">
+        <Container>
+          <SectionHeading
+            eyebrow="In their words"
+            title={
+              <>
+                The work, in{" "}
+                <span className="text-white/38">their words.</span>
+              </>
+            }
+            lead="We keep the circle small: the people who scope your project are the people who build it."
+          />
+
+          <div className="mt-12 grid gap-4 md:grid-cols-3">
+            {TESTIMONIALS.map((testimonial, index) => (
+              <Reveal key={testimonial.name} delay={index * 80}>
+                <figure className="glass card-lift flex h-full flex-col p-6">
+                  <span
+                    aria-hidden="true"
+                    className="font-display text-[2.4rem] leading-none tracking-[-0.06em] text-white/12"
+                  >
+                    &ldquo;
+                  </span>
+                  <blockquote className="mt-2 flex-1 text-[14px] leading-[1.7] text-white/62">
+                    {testimonial.quote}
+                  </blockquote>
+                  <figcaption className="mt-7 flex items-center gap-3 border-t border-white/10 pt-5">
+                    <span className="grid h-8 w-8 place-items-center rounded-full border border-white/10 bg-white/[0.04] font-mono text-[10px] text-white/55">
+                      {testimonial.name
+                        .split(" ")
+                        .map((part) => part[0])
+                        .join("")}
+                    </span>
+                    <span>
+                      <span className="block text-[12px] font-medium text-white/80">
+                        {testimonial.name}
+                      </span>
+                      <span className="mt-0.5 block font-mono text-[9px] uppercase tracking-[0.08em] text-white/32">
+                        {testimonial.role}, {testimonial.company}
+                      </span>
+                    </span>
+                  </figcaption>
+                </figure>
+              </Reveal>
+            ))}
           </div>
-        </section>
-      </AnimatedSection>
+        </Container>
+      </section>
 
-      <AnimatedSection>
-        <section className="relative py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-2xl mb-12">
-              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                How we <span className="gradient-text">work</span>
-              </h2>
-              <p className="text-muted-foreground">
-                Four steps from first call to a system your team uses every day.
-              </p>
-            </div>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              {processSteps.map((step, index) => (
-                <article key={step.title} className="glass-card p-7">
-                  <p className="font-display text-2xl font-bold text-primary/60 mb-4">
-                    0{index + 1}
-                  </p>
-                  <h3 className="font-display text-lg font-semibold mb-3">{step.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground">
-                    {step.description}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      </AnimatedSection>
+      {/* ---------------- Industries ---------------- */}
+      <section className="section border-y border-white/10 bg-[#090b0e]">
+        <Container>
+          <SectionHeading
+            eyebrow="Industries"
+            title={
+              <>
+                Built for work where{" "}
+                <span className="text-white/38">mistakes are expensive.</span>
+              </>
+            }
+            lead="We are not a general-purpose agency. These are the operations we know well enough to improve quickly."
+          />
 
-      <AnimatedSection>
-        <section className="relative py-14 border-y border-border/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="text-center text-xs uppercase tracking-[0.2em] text-muted-foreground/70 mb-6">
-              Built with
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-2.5">
-              {technologies.map((tech) => (
-                <span
-                  key={tech}
-                  className="px-3.5 py-1.5 rounded-full border border-border/60 bg-secondary/25 text-xs text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors duration-300"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
-      </AnimatedSection>
-
-      <AnimatedSection>
-        <section className="relative py-24">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="font-display text-3xl md:text-4xl font-bold mb-10 text-center">
-              Frequently asked <span className="gradient-text">questions</span>
-            </h2>
-            <div className="space-y-4">
-              {faqs.map((faq, index) => {
-                const isOpen = openFaqIndex === index;
-                return (
-                  <div key={faq.question} className="glass-card overflow-hidden">
-                    <button
-                      type="button"
-                      aria-expanded={isOpen}
-                      className="w-full flex items-center justify-between gap-4 text-left px-5 py-4"
-                      onClick={() => setOpenFaqIndex((prev) => (prev === index ? null : index))}
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {INDUSTRIES.map((industry, index) => {
+              const Icon = industryIcons[industry.icon as keyof typeof industryIcons];
+              return (
+                <Reveal key={industry.name} delay={index * 70}>
+                  <div className="group relative flex h-full flex-col overflow-hidden rounded-[14px] border border-white/10 bg-gradient-to-b from-white/[0.04] to-white/[0.01] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-white/20">
+                    <span className="grid h-10 w-10 place-items-center rounded-[9px] border border-white/10 bg-white/[0.035] text-ice/70 transition-colors duration-300 group-hover:border-ice/20 group-hover:text-ice">
+                      <Icon size={18} strokeWidth={1.5} />
+                    </span>
+                    <h3 className="display-4 mt-10">{industry.name}</h3>
+                    <p className="body-copy mt-3 flex-1">{industry.description}</p>
+                    <Link
+                      to="/services"
+                      className="mt-6 inline-flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.12em] text-white/35 transition-colors group-hover:text-white/70"
                     >
-                      <span className="font-semibold">{faq.question}</span>
-                      <ChevronDown
-                        size={18}
-                        className={`shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`}
-                      />
-                    </button>
-                    {isOpen && (
-                      <div className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground">
-                        {faq.answer}
-                      </div>
-                    )}
+                      Explore
+                      <ArrowUpRight size={11} />
+                    </Link>
                   </div>
-                );
-              })}
-            </div>
+                </Reveal>
+              );
+            })}
           </div>
-        </section>
-      </AnimatedSection>
+        </Container>
+      </section>
 
-      <AnimatedSection>
-        <section className="relative py-24 border-t border-border/50">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="glass-card gradient-border p-12 md:p-16">
-              <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-                Tell us where the <span className="gradient-text">manual work</span> is
+      {/* ---------------- FAQ ---------------- */}
+      <section className="section">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
+            <div>
+              <Eyebrow>Questions</Eyebrow>
+              <h2 className="display-2 mt-6">
+                The things teams{" "}
+                <span className="text-white/38">usually ask.</span>
               </h2>
-              <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-                A free 30-minute call. We will tell you what is worth automating first,
-                what it takes to build, and roughly what it costs.
+              <p className="lead mt-5">
+                If yours is not here, ask it directly. You will get a straight
+                answer, not a discovery call.
               </p>
-              <Link
+              <ButtonLink
                 to="/contact"
-                className="btn-gradient inline-flex items-center gap-2 group text-base"
+                variant="secondary"
+                withArrow
+                className="mt-7"
               >
-                Book a free consultation
-                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <p className="text-sm text-muted-foreground mt-6">
-                Or email{" "}
-                <a href="mailto:hello@timesquarellc.com" className="text-primary hover:underline">
-                  hello@timesquarellc.com
-                </a>
-              </p>
+                Ask us directly
+              </ButtonLink>
             </div>
+            <FaqAccordion faqs={FAQS} />
           </div>
-        </section>
-      </AnimatedSection>
+        </Container>
+      </section>
+
+      <ClosingCTA />
     </div>
   );
 }

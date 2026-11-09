@@ -46,6 +46,18 @@ function parseKeywords(value?: string): string[] {
 
 marked.setOptions({ gfm: true, breaks: false });
 
+/**
+ * The page already renders the post title as its <h1>. Drop a leading
+ * markdown title so articles don't repeat it, and demote any remaining h1
+ * so the document outline stays valid.
+ */
+function renderBody(markdown: string): string {
+  return (marked.parse(markdown) as string)
+    .replace(/^\s*<h1[^>]*>[\s\S]*?<\/h1>\s*/, "")
+    .replace(/<h1(\s[^>]*)?>/g, "<h2$1>")
+    .replace(/<\/h1>/g, "</h2>");
+}
+
 function build(): BlogPost[] {
   const posts: BlogPost[] = [];
 
@@ -71,7 +83,7 @@ function build(): BlogPost[] {
       date: data.date || "",
       keywords: parseKeywords(data.keywords),
       coverImage: data.coverImage || undefined,
-      html: marked.parse(body) as string,
+      html: renderBody(body),
       readingMinutes: Math.max(1, Math.round(wordCount / 200)),
     });
   }

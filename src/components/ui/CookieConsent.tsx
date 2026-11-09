@@ -21,20 +21,25 @@ export default function CookieConsent() {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background/95 backdrop-blur px-4 py-3">
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <p className="text-sm text-muted-foreground">
-          We use cookies to improve your experience. By using our site, you agree to our{" "}
-          <Link to="/privacy-policy" className="text-primary hover:underline">
+    <div className="fixed bottom-4 left-1/2 z-[60] w-[calc(100%-24px)] max-w-[760px] -translate-x-1/2">
+      <div className="nav-glass flex flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-[12px] leading-[1.55] text-white/55">
+          We use cookies to understand how the site is used. By continuing, you
+          agree to our{" "}
+          <Link
+            to="/privacy-policy"
+            className="text-white/85 underline decoration-white/25 underline-offset-2 hover:text-white"
+          >
             Privacy Policy
           </Link>
           .
         </p>
-        <div className="flex items-center gap-2">
-          <Link to="/privacy-policy" className="btn-outline-gradient text-sm px-4 py-2">
-            Privacy Policy
-          </Link>
-          <button type="button" onClick={acceptCookies} className="btn-gradient text-sm px-4 py-2">
+        <div className="flex shrink-0 items-center gap-2">
+          <button
+            type="button"
+            onClick={acceptCookies}
+            className="btn btn-primary btn-sm"
+          >
             Accept
           </button>
         </div>

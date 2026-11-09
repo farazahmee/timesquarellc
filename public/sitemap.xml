@@ -2,55 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://timesquarellc.com/</loc>
-    <lastmod>2026-07-21</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1</priority>
   </url>
   <url>
     <loc>https://timesquarellc.com/services</loc>
-    <lastmod>2026-07-21</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://timesquarellc.com/case-studies</loc>
-    <lastmod>2026-07-21</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://timesquarellc.com/blog</loc>
-    <lastmod>2026-07-21</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
     <loc>https://timesquarellc.com/about</loc>
-    <lastmod>2026-07-21</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://timesquarellc.com/contact</loc>
-    <lastmod>2026-07-21</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://timesquarellc.com/privacy-policy</loc>
-    <lastmod>2026-07-21</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://timesquarellc.com/terms-of-service</loc>
-    <lastmod>2026-07-21</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://timesquarellc.com/blog/ai-automation-for-b2b-teams</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://timesquarellc.com/blog/how-ai-automation-saves-b2b-teams-20-hours-a-week</loc>
-    <lastmod>2026-07-21</lastmod>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://timesquarellc.com/blog/why-ai-automation-is-becoming-a-must-have-for-b2b-founders</loc>
+    <lastmod>2026-08-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

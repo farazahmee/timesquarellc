@@ -8,17 +8,16 @@ export default function ScrollToTop() {
 
   useEffect(() => {
     const onScroll = () => {
-      setVisible(window.scrollY > 300);
+      setVisible(window.scrollY > 420);
     };
 
     onScroll();
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Ensure every route navigation starts at the top.
+  // Every route navigation starts at the top.
   useEffect(() => {
-    // Let React/router update the DOM, then force scroll restoration.
     window.requestAnimationFrame(() => {
       window.scrollTo({ top: 0, left: 0 });
       setVisible(false);
@@ -34,9 +33,9 @@ export default function ScrollToTop() {
       type="button"
       aria-label="Scroll to top"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="fixed bottom-6 right-6 z-50 h-11 w-11 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/40 hover:brightness-110 transition-all duration-300"
+      className="fixed bottom-5 right-5 z-50 grid h-10 w-10 place-items-center rounded-[10px] border border-white/12 bg-[#0e1014]/90 text-white/60 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.8)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:text-white"
     >
-      <ArrowUp size={18} className="mx-auto" />
+      <ArrowUp size={16} strokeWidth={1.8} />
     </button>
   );
 }
