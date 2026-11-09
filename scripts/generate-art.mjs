@@ -260,6 +260,241 @@ write("cap-software.svg", software);
 write("cap-web.svg", web);
 
 /* ------------------------------------------------------------------ */
+/* Project spotlight — chauffeur operations dashboard                 */
+/* ------------------------------------------------------------------ */
+
+const dashNav = [
+  ["Overview", false],
+  ["Bookings", true],
+  ["Compliance", false],
+  ["Invoices", false],
+  ["Drivers", false],
+  ["Vehicles", false],
+];
+
+const dashKpis = [
+  ["Live jobs", "12", "+3 today", "#7ee2b8"],
+  ["Pending review", "4", "2 airport", "#f5c76b"],
+  ["Hours saved", "18.5", "this week", "#8fa3b8"],
+  ["Compliance", "96%", "1 expiring", "#f5c76b"],
+];
+
+const complianceRows = [
+  ["MOT", "Valid", "#7ee2b8"],
+  ["PHV vehicle", "9 days", "#f5c76b"],
+  ["Insurance", "Valid", "#7ee2b8"],
+  ["DBS", "Valid", "#7ee2b8"],
+];
+
+const chauffeur = `
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="760" viewBox="0 0 1600 760" fill="none" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+  <defs>
+    <radialGradient id="ch-bg" cx="50%" cy="44%" r="72%">
+      <stop offset="0%" stop-color="#101722"/>
+      <stop offset="58%" stop-color="#090c11"/>
+      <stop offset="100%" stop-color="#06080c"/>
+    </radialGradient>
+    <radialGradient id="ch-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#acceef" stop-opacity="0.2"/>
+      <stop offset="55%" stop-color="#3771c8" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#08090b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ch-panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d121a"/>
+      <stop offset="100%" stop-color="#080b10"/>
+    </linearGradient>
+    <linearGradient id="ch-route" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3771c8" stop-opacity="0.35"/>
+      <stop offset="55%" stop-color="#acceef" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#dcecff"/>
+    </linearGradient>
+    <pattern id="ch-grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" stroke="#ffffff" stroke-opacity="0.028" stroke-width="1"/>
+    </pattern>
+    <filter id="ch-shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="30" stdDeviation="34" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+    <filter id="ch-blur" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="44"/>
+    </filter>
+    <filter id="ch-route-glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <clipPath id="ch-map-clip">
+      <rect x="310" y="350" width="760" height="324" rx="0"/>
+    </clipPath>
+  </defs>
+
+  <rect width="1600" height="760" fill="url(#ch-bg)"/>
+  <rect width="1600" height="760" fill="url(#ch-grid)" opacity="0.8"/>
+  <ellipse cx="1290" cy="150" rx="480" ry="300" fill="url(#ch-glow)" filter="url(#ch-blur)"/>
+  <ellipse cx="260" cy="650" rx="320" ry="220" fill="url(#ch-glow)" opacity="0.45" filter="url(#ch-blur)"/>
+
+  <rect x="64" y="44" width="1472" height="672" rx="24" fill="url(#ch-panel)" stroke="#ffffff" stroke-opacity="0.09" filter="url(#ch-shadow)"/>
+  <path d="M64 102H1536" stroke="#ffffff" stroke-opacity="0.07"/>
+  <path d="M274 102V716" stroke="#ffffff" stroke-opacity="0.07"/>
+
+  <!-- top bar -->
+  <g>
+    <circle cx="94" cy="73" r="4" fill="#ffffff" opacity="0.14"/>
+    <circle cx="112" cy="73" r="4" fill="#ffffff" opacity="0.1"/>
+    <circle cx="130" cy="73" r="4" fill="#ffffff" opacity="0.08"/>
+    <text x="160" y="78" fill="#e8eef6" font-size="13" font-weight="600" letter-spacing="-0.2">Chauffeur operations</text>
+    <g font-size="12">
+      <rect x="610" y="56" width="58" height="34" rx="8" fill="#ffffff" fill-opacity="0.06"/>
+      <text x="639" y="78" fill="#dce6f2" text-anchor="middle">Today</text>
+      <text x="710" y="78" fill="#8a97a8" text-anchor="middle">Bookings</text>
+      <text x="800" y="78" fill="#8a97a8" text-anchor="middle">Compliance</text>
+      <text x="906" y="78" fill="#8a97a8" text-anchor="middle">Invoices</text>
+    </g>
+    <rect x="1114" y="57" width="252" height="32" rx="8" fill="#ffffff" fill-opacity="0.035" stroke="#ffffff" stroke-opacity="0.06"/>
+    <circle cx="1132" cy="73" r="5" stroke="#8a97a8" stroke-opacity="0.8" fill="none"/>
+    <path d="M1136 77L1141 82" stroke="#8a97a8" stroke-opacity="0.8" stroke-linecap="round"/>
+    <text x="1152" y="78" fill="#6f7c8d" font-size="11">Search jobs, drivers, vehicles</text>
+    <circle cx="1468" cy="73" r="15" fill="#acceef" fill-opacity="0.12" stroke="#acceef" stroke-opacity="0.22"/>
+    <text x="1468" y="77" fill="#dcecff" font-size="10" font-weight="600" text-anchor="middle">JW</text>
+  </g>
+
+  <!-- sidebar -->
+  <g>
+    <rect x="86" y="122" width="30" height="30" rx="8" fill="#acceef" fill-opacity="0.1" stroke="#acceef" stroke-opacity="0.22"/>
+    <rect x="94" y="130" width="6" height="6" rx="1.5" fill="#dcecff"/>
+    <rect x="103" y="130" width="6" height="6" rx="1.5" fill="#dcecff" opacity="0.55"/>
+    <rect x="94" y="139" width="6" height="6" rx="1.5" fill="#dcecff" opacity="0.55"/>
+    <rect x="103" y="139" width="6" height="6" rx="1.5" fill="#dcecff" opacity="0.25"/>
+    <text x="126" y="136" fill="#e8eef6" font-size="12" font-weight="600" letter-spacing="-0.1">TimeSquare</text>
+    <text x="126" y="149" fill="#6f7c8d" font-size="9" letter-spacing="0.8">OPS</text>
+
+    ${dashNav
+      .map(([label, active], index) => {
+        const y = 196 + index * 40;
+        return `
+    ${active ? `<rect x="82" y="${y - 16}" width="174" height="32" rx="8" fill="#acceef" fill-opacity="0.08"/><rect x="82" y="${y - 16}" width="2" height="32" rx="1" fill="#acceef" fill-opacity="0.8"/>` : ""}
+    <rect x="96" y="${y - 6}" width="12" height="12" rx="3" fill="${active ? "#acceef" : "#ffffff"}" fill-opacity="${active ? "0.75" : "0.16"}"/>
+    <text x="118" y="${y + 4}" fill="${active ? "#dcecff" : "#8a97a8"}" font-size="12" font-weight="${active ? "500" : "400"}">${label}</text>`;
+      })
+      .join("")}
+
+    <rect x="86" y="590" width="166" height="94" rx="12" fill="#ffffff" fill-opacity="0.028" stroke="#ffffff" stroke-opacity="0.07"/>
+    <rect x="102" y="606" width="24" height="38" rx="6" stroke="#acceef" stroke-opacity="0.4" fill="#acceef" fill-opacity="0.06"/>
+    <rect x="108" y="612" width="12" height="22" rx="2" fill="#acceef" fill-opacity="0.18"/>
+    <circle cx="114" cy="638" r="1.8" fill="#acceef" fill-opacity="0.7"/>
+    <text x="138" y="620" fill="#dce6f2" font-size="11" font-weight="500">Driver app</text>
+    <text x="138" y="637" fill="#6f7c8d" font-size="9">Installed on 6 phones</text>
+    <rect x="138" y="648" width="66" height="19" rx="5" fill="#7ee2b8" fill-opacity="0.09"/>
+    <text x="171" y="661" fill="#7ee2b8" font-size="8" text-anchor="middle" letter-spacing="0.4">PWA READY</text>
+  </g>
+
+  <!-- main header -->
+  <g>
+    <text x="310" y="151" fill="#edf3fa" font-size="30" font-weight="600" letter-spacing="-0.9">Bookings</text>
+    <text x="310" y="176" fill="#6f7c8d" font-size="12">Friday, 14 November · 09:42</text>
+    <rect x="1318" y="128" width="182" height="40" rx="10" fill="#edf3fa"/>
+    <text x="1409" y="153" fill="#0a0d12" font-size="12" font-weight="600" text-anchor="middle">+ New booking</text>
+  </g>
+
+  <!-- KPI cards -->
+  ${dashKpis
+    .map(([label, value, trend, color], index) => {
+      const x = 310 + index * 301;
+      return `
+  <g>
+    <rect x="${x}" y="196" width="287" height="98" rx="14" fill="#ffffff" fill-opacity="0.025" stroke="#ffffff" stroke-opacity="0.065"/>
+    <text x="${x + 16}" y="${222}" fill="#7d8a9b" font-size="10" letter-spacing="0.7">${label.toUpperCase()}</text>
+    <text x="${x + 16}" y="${258}" fill="#edf3fa" font-size="29" font-weight="600" letter-spacing="-0.9">${value}</text>
+    <circle cx="${x + 20}" cy="${272}" r="2.5" fill="${color}"/>
+    <text x="${x + 29}" y="${276}" fill="${color}" font-size="10" opacity="0.8">${trend}</text>
+  </g>`;
+    })
+    .join("")}
+
+  <!-- map card -->
+  <g>
+    <rect x="310" y="310" width="760" height="364" rx="14" fill="#080c12" stroke="#ffffff" stroke-opacity="0.07"/>
+    <text x="330" y="338" fill="#dce6f2" font-size="12" font-weight="500">Live map</text>
+    <rect x="958" y="322" width="92" height="24" rx="12" fill="#7ee2b8" fill-opacity="0.08" stroke="#7ee2b8" stroke-opacity="0.18"/>
+    <text x="1004" y="338" fill="#7ee2b8" font-size="9" text-anchor="middle" letter-spacing="0.4">12 ACTIVE</text>
+  </g>
+
+  <g clip-path="url(#ch-map-clip)">
+    <rect x="310" y="350" width="760" height="324" fill="#070b10"/>
+    <g stroke="#ffffff" stroke-opacity="0.04" stroke-width="1">
+      <path d="M310 420H1070"/>
+      <path d="M310 500H1070"/>
+      <path d="M310 580H1070"/>
+      <path d="M310 660H1070"/>
+      <path d="M420 350V674"/>
+      <path d="M540 350V674"/>
+      <path d="M660 350V674"/>
+      <path d="M780 350V674"/>
+      <path d="M900 350V674"/>
+      <path d="M1020 350V674"/>
+    </g>
+    <g stroke="#1b2533" stroke-width="6" fill="none" opacity="0.9">
+      <path d="M330 640C430 610 470 540 560 520S700 548 760 500 860 410 960 390"/>
+      <path d="M330 470C420 500 500 470 590 440S720 380 830 400 950 500 1040 520"/>
+    </g>
+    <g stroke="#111a25" stroke-width="2" fill="none" opacity="0.8">
+      <path d="M330 640C430 610 470 540 560 520S700 548 760 500 860 410 960 390"/>
+      <path d="M330 470C420 500 500 470 590 440S720 380 830 400 950 500 1040 520"/>
+    </g>
+    <path d="M390 610C470 562 530 542 610 518S760 456 820 428 930 386 980 362" stroke="#acceef" stroke-opacity="0.28" stroke-width="14" stroke-linecap="round" filter="url(#ch-route-glow)"/>
+    <path d="M390 610C470 562 530 542 610 518S760 456 820 428 930 386 980 362" stroke="url(#ch-route)" stroke-width="3.4" stroke-linecap="round"/>
+    <circle cx="390" cy="610" r="15" fill="#acceef" fill-opacity="0.12"/>
+    <circle cx="390" cy="610" r="5" fill="#dcecff"/>
+    <circle cx="980" cy="362" r="17" fill="#acceef" fill-opacity="0.12"/>
+    <circle cx="980" cy="362" r="6" fill="#dcecff"/>
+    <circle cx="980" cy="362" r="10" stroke="#acceef" stroke-opacity="0.45" fill="none"/>
+    <g transform="translate(686 478)">
+      <rect x="-17" y="-13" width="34" height="26" rx="8" fill="#edf3fa"/>
+      <rect x="-9" y="-5" width="18" height="10" rx="3" fill="#0a0d12"/>
+      <circle cx="-8" cy="10" r="2.4" fill="#0a0d12"/>
+      <circle cx="8" cy="10" r="2.4" fill="#0a0d12"/>
+    </g>
+    <text x="958" y="358" fill="#dcecff" font-size="11" font-weight="500" text-anchor="end">Heathrow T5</text>
+    <text x="958" y="372" fill="#7d8a9b" font-size="9" text-anchor="end">Drop-off · 14:28</text>
+    <g>
+      <rect x="330" y="582" width="248" height="72" rx="11" fill="#0a1018" fill-opacity="0.94" stroke="#ffffff" stroke-opacity="0.09"/>
+      <text x="348" y="604" fill="#7d8a9b" font-size="9" letter-spacing="0.6">NEXT PICKUP</text>
+      <text x="348" y="624" fill="#edf3fa" font-size="15" font-weight="500">Mayfair · 14:10</text>
+      <text x="348" y="641" fill="#8a97a8" font-size="9">James W. · Mercedes V-Class</text>
+    </g>
+  </g>
+
+  <!-- next job -->
+  <g>
+    <rect x="1086" y="310" width="414" height="170" rx="14" fill="#ffffff" fill-opacity="0.025" stroke="#ffffff" stroke-opacity="0.07"/>
+    <text x="1106" y="338" fill="#7d8a9b" font-size="10" letter-spacing="0.7">NEXT JOB</text>
+    <rect x="1400" y="322" width="80" height="24" rx="12" fill="#7ee2b8" fill-opacity="0.08" stroke="#7ee2b8" stroke-opacity="0.18"/>
+    <text x="1440" y="338" fill="#7ee2b8" font-size="9" text-anchor="middle" letter-spacing="0.4">CONFIRMED</text>
+    <text x="1106" y="376" fill="#edf3fa" font-size="24" font-weight="500" letter-spacing="-0.5">Airport transfer</text>
+    <text x="1106" y="401" fill="#8a97a8" font-size="12">Heathrow T5 → Mayfair</text>
+    <path d="M1106 418H1480" stroke="#ffffff" stroke-opacity="0.06"/>
+    <text x="1106" y="442" fill="#dce6f2" font-size="12">Today · 14:30</text>
+    <text x="1106" y="461" fill="#7d8a9b" font-size="10">James W. · Mercedes V-Class · BA 123</text>
+  </g>
+
+  <!-- compliance -->
+  <g>
+    <rect x="1086" y="492" width="414" height="182" rx="14" fill="#ffffff" fill-opacity="0.025" stroke="#ffffff" stroke-opacity="0.07"/>
+    <text x="1106" y="520" fill="#7d8a9b" font-size="10" letter-spacing="0.7">COMPLIANCE</text>
+    <text x="1480" y="520" fill="#edf3fa" font-size="14" font-weight="600" text-anchor="end">96%</text>
+    ${complianceRows
+      .map(([label, status, color], index) => {
+        const y = 552 + index * 30;
+        return `
+    <path d="M1106 ${y - 14}H1480" stroke="#ffffff" stroke-opacity="0.05"/>
+    <text x="1106" y="${y + 4}" fill="#b9c4d1" font-size="11">${label}</text>
+    <circle cx="1430" cy="${y}" r="2.5" fill="${color}"/>
+    <text x="1480" y="${y + 4}" fill="${color}" font-size="10" text-anchor="end">${status}</text>`;
+      })
+      .join("")}
+  </g>
+</svg>`;
+
+write("project-chauffeur.svg", chauffeur);
+
+/* ------------------------------------------------------------------ */
 /* Topographic CTA background                                         */
 /* ------------------------------------------------------------------ */
 

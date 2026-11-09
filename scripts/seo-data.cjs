@@ -34,9 +34,9 @@ const STATIC_ROUTES = [
     path: '/case-studies',
     priority: 0.8,
     changefreq: 'weekly',
-    title: 'AI Case Studies & Portfolio | Healthcare, Finance, Retail Projects | TimeSquare LLC',
+    title: 'AI Case Studies & Portfolio | Healthcare, Finance, Retail, Transport | TimeSquare LLC',
     description:
-      'Explore our portfolio of AI automation solutions across healthcare, finance, and retail, including SurgiSync, Simpla.AI, and RevelTV projects.',
+      'Explore our portfolio of AI automation and custom software across healthcare, finance, retail and private hire, including SurgiSync, Simpla.AI, RevelTV and a chauffeur operations platform.',
   },
   {
     path: '/blog',

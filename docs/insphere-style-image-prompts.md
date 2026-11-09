@@ -139,6 +139,25 @@ Use the same seed and the hero image as a style reference for consistency.
 > above, faint ice-blue reflection below, minimal, lots of negative space,
 > cinematic grain. [master style block] --ar 21:9
 
+## 8. Chauffeur operations platform
+
+**Use:** full-width project spotlight image on `/case-studies`.
+**Aspect:** 21:9 or 16:7.
+
+> Dark editorial photograph for a private-hire technology project: a black
+> executive saloon waiting outside an airport terminal at blue hour, wet tarmac
+> reflecting cool terminal lights, a chauffeur in a dark suit opening the rear
+> door, shallow depth of field, cinematic grain, premium and understated, no
+> text, no logos. --ar 21:9
+
+**Alternative product-UI image**, if a dashboard visual is preferred:
+
+> Premium product UI mockup floating on a near-black background: a wide glass
+> panel showing a chauffeur operations dashboard with a live route map, booking
+> review cards, compliance status rows, and an invoice total, icy blue accents,
+> deep navy glass, soft studio reflections, cinematic grain, no readable body
+> copy, no logos. --ar 16:9
+
 ## Negative prompt
 
 > text, typography, letters, logo, watermark, signature, UI screenshots,

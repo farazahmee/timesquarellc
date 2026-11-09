@@ -472,8 +472,12 @@ export type CaseStudy = {
   description: string;
   tech: string[];
   results: string[];
+  highlights?: string[];
+  note?: string;
+  image?: string;
   link?: string;
   featured?: boolean;
+  spotlight?: boolean;
 };
 
 export const CASE_STUDIES: CaseStudy[] = [
@@ -571,6 +575,45 @@ export const CASE_STUDIES: CaseStudy[] = [
       "This churn prediction project combined feature engineering, model training automation, and orchestration with Apache Airflow. We built a repeatable ML pipeline with reporting and alerts that improved retention decision-making.",
     tech: ["Apache Airflow", "Pandas", "NumPy", "Wandb", "Slack"],
     results: ["Automated predictions", "Pipeline automation", "Slack notifications"],
+  },
+  {
+    slug: "chauffeur-operations",
+    title: "Chauffeur Operations Platform",
+    category: "Private hire & executive travel",
+    metric: "End-to-end",
+    metricLabel: "bookings, compliance and billing",
+    summary:
+      "A booking-to-invoice platform for chauffeur and private-hire operators, built as a lighter alternative to the parts of iCabbi teams were not using.",
+    description:
+      "A booking-to-invoice platform for chauffeur and private-hire operators. Online requests arrive for review before they become confirmed jobs, with point-to-point, hourly and as-directed work, optional flight numbers, automatic customer emails and a public booking endpoint ready for a website. Compliance tracking covers MOT, PHV vehicle and driver licences, insurance, road tax and DBS checks, with configurable warn-or-block rules before a non-compliant driver or vehicle can be assigned. Invoices are generated from job records, emailed automatically and tracked as paid. Drivers install the app to their home screen and see only their own jobs.",
+    tech: [
+      "Booking workflow",
+      "Compliance rules",
+      "Invoicing",
+      "PWA",
+      "Email automation",
+      "Public API",
+    ],
+    results: [
+      "Review-first booking flow",
+      "Compliance-aware dispatch",
+      "Invoice to paid, tracked",
+    ],
+    highlights: [
+      "Booking requests wait for review before they become confirmed jobs.",
+      "Point-to-point, hourly and as-directed work, with optional flight numbers.",
+      "Automatic new-booking alerts and customer confirmation emails.",
+      "MOT, PHV vehicle and driver licences, insurance, road tax and DBS tracking.",
+      "Configurable rules that warn or block a job when a driver or vehicle is not compliant.",
+      "Invoices generated from job records, emailed automatically and marked as paid.",
+      "Live dashboard with job history, recent jobs and monthly totals.",
+      "Flight status, address autocomplete and distance-based rate suggestions.",
+      "Installable driver app with own jobs only, plus a public booking endpoint.",
+    ],
+    note:
+      "A lighter alternative to the parts of iCabbi teams were not using — shaped around how private-hire operators actually dispatch, stay compliant and invoice.",
+    image: "/art/project-chauffeur.svg",
+    spotlight: true,
   },
 ];
 

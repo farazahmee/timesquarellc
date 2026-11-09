@@ -9,23 +9,29 @@ import StatBand from "@/components/site/StatBand";
 import ClosingCTA from "@/components/site/ClosingCTA";
 import { CASE_STUDIES } from "@/content/site";
 
+const sectorCount = new Set(CASE_STUDIES.map((study) => study.category)).size;
+
 const results = [
-  { value: "7", label: "selected case studies" },
-  { value: "5", label: "sectors represented" },
+  { value: String(CASE_STUDIES.length), label: "selected case studies" },
+  { value: String(sectorCount), label: "sectors represented" },
   { value: "35–80%", label: "reported improvements" },
 ];
 
 export default function CaseStudies() {
   useSEO({
     title:
-      "AI Case Studies & Portfolio | Healthcare, Finance, Retail Projects | TimeSquare LLC",
+      "AI Case Studies & Portfolio | Healthcare, Finance, Retail, Transport | TimeSquare LLC",
     description:
-      "Explore our portfolio of AI automation solutions across healthcare, finance, and retail, including SurgiSync, Simpla.AI, and RevelTV projects.",
+      "Explore our portfolio of AI automation and custom software across healthcare, finance, retail and private hire, including SurgiSync, Simpla.AI, RevelTV and a chauffeur operations platform.",
     canonical: "https://timesquarellc.com/case-studies",
   });
 
   const featured = CASE_STUDIES.find((study) => study.featured) ?? CASE_STUDIES[0];
-  const rest = CASE_STUDIES.filter((study) => study.slug !== featured.slug);
+  const spotlight = CASE_STUDIES.find((study) => study.spotlight);
+  const rest = CASE_STUDIES.filter(
+    (study) =>
+      study.slug !== featured.slug && study.slug !== spotlight?.slug,
+  );
 
   return (
     <div className="relative">
@@ -133,6 +139,137 @@ export default function CaseStudies() {
           </Reveal>
         </Container>
       </section>
+
+      {/* Project spotlight */}
+      {spotlight && (
+        <section className="section-tight">
+          <Container>
+            <SectionHeading
+              eyebrow="Project spotlight"
+              title={
+                <>
+                  From booking request to{" "}
+                  <span className="text-white/38">paid invoice.</span>
+                </>
+              }
+              lead="A recent platform build for chauffeur and private-hire operators — booking review, compliance gates, invoicing and a driver app in one system."
+              actions={
+                <ButtonLink to="/contact" variant="secondary" withArrow>
+                  Discuss a similar build
+                </ButtonLink>
+              }
+            />
+
+            <Reveal>
+              <article
+                id={spotlight.slug}
+                className="glass mt-12 scroll-mt-28 overflow-hidden"
+              >
+                <div className="relative border-b border-white/10 bg-[#070a0f]">
+                  <img
+                    src={spotlight.image}
+                    alt="Chauffeur operations dashboard showing live bookings, a route map, upcoming jobs and compliance status."
+                    className="block h-auto w-full"
+                    loading="lazy"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#08090b]/70 via-transparent to-transparent"
+                  />
+                  <div className="absolute left-5 top-5 flex flex-wrap gap-2 md:left-7 md:top-7">
+                    <span className="rounded-full border border-white/15 bg-black/55 px-3 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-white/70 backdrop-blur-md">
+                      {spotlight.category}
+                    </span>
+                    <span className="rounded-full border border-ice/25 bg-ice/[0.08] px-3 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-ice/80 backdrop-blur-md">
+                      New build
+                    </span>
+                  </div>
+                </div>
+
+                <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
+                  <div className="p-7 md:p-9 lg:border-r lg:border-white/10">
+                    <p className="meta-label">{spotlight.category}</p>
+                    <h2 className="display-3 mt-3">{spotlight.title}</h2>
+
+                    <p className="body-copy mt-5">{spotlight.description}</p>
+
+                    <div className="mt-7 grid gap-3 border-t border-white/10 pt-6 sm:grid-cols-3">
+                      {spotlight.results.map((result) => (
+                        <div
+                          key={result}
+                          className="flex items-start gap-2 text-[12px] leading-[1.5] text-white/55"
+                        >
+                          <span className="mt-[6px] h-1 w-1 shrink-0 rounded-full bg-ice/60" />
+                          {result}
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-7 flex flex-wrap gap-1.5">
+                      {spotlight.tech.map((tech) => (
+                        <span
+                          key={tech}
+                          className="rounded-[5px] border border-white/[0.08] bg-white/[0.02] px-2 py-1 font-mono text-[8.5px] uppercase tracking-[0.06em] text-white/32"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="p-7 md:p-9">
+                    <div className="flex items-start justify-between gap-4">
+                      <h3 className="meta-label">What it handles</h3>
+                      {spotlight.metric && (
+                        <div className="text-right">
+                          <p className="font-display text-[1.35rem] font-medium leading-none tracking-[-0.04em] text-white/85">
+                            {spotlight.metric}
+                          </p>
+                          <p className="mt-1 max-w-[150px] text-[10px] leading-[1.45] text-white/40">
+                            {spotlight.metricLabel}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                    <ul className="mt-4 divide-y divide-white/[0.07]">
+                      {spotlight.highlights?.map((highlight, index) => (
+                        <li
+                          key={highlight}
+                          className="flex items-start gap-3 py-3 first:pt-0"
+                        >
+                          <span className="mt-[1px] shrink-0 font-mono text-[9px] tracking-[0.08em] text-ice/45">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                          <span className="text-[12.5px] leading-[1.55] text-white/55">
+                            {highlight}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {spotlight.note && (
+                      <div className="mt-6 rounded-[10px] border border-white/10 bg-white/[0.025] p-5">
+                        <p className="text-[12.5px] leading-[1.6] text-white/52">
+                          {spotlight.note}
+                        </p>
+                        <ButtonLink
+                          to="/contact"
+                          variant="primary"
+                          size="sm"
+                          className="mt-4"
+                          withArrow
+                        >
+                          Talk about a build
+                        </ButtonLink>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </article>
+            </Reveal>
+          </Container>
+        </section>
+      )}
 
       {/* Grid */}
       <section className="section">
