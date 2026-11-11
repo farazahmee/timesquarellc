@@ -60,7 +60,7 @@ export default function Home() {
       <section className="relative overflow-hidden pb-16 pt-36 sm:pt-40 lg:pb-20 lg:pt-44">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-grid opacity-70" />
-          <div className="absolute -right-[28%] top-[-4%] w-[110%] max-w-[1100px] opacity-55 sm:-right-[14%] sm:top-[-12%] sm:w-[80%] sm:opacity-65 lg:right-[-2%] lg:top-[-16%] lg:w-[68%] lg:opacity-90">
+          <div className="absolute -right-[28%] top-[-4%] w-[110%] max-w-[1100px] opacity-55 sm:-right-[14%] sm:top-[-12%] sm:w-[80%] sm:opacity-65 lg:right-[-2%] lg:top-0 lg:w-[68%] lg:opacity-90">
             <picture>
               <source
                 media="(max-width: 639px)"
