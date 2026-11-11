@@ -69,6 +69,21 @@ export default function CaseStudies() {
             >
               <div className="grid lg:grid-cols-[0.85fr_1.15fr]">
                 <div className="relative overflow-hidden border-b border-white/10 bg-gradient-to-br from-ice/[0.09] via-indigo/10 to-transparent p-7 md:p-9 lg:border-b-0 lg:border-r">
+                  {featured.image && (
+                    <>
+                      <img
+                        src={featured.image}
+                        alt=""
+                        aria-hidden="true"
+                        loading="lazy"
+                        className="absolute inset-0 h-full w-full object-cover opacity-45"
+                      />
+                      <div
+                        aria-hidden="true"
+                        className="absolute inset-0 bg-gradient-to-t from-[#08090b] via-[#08090b]/70 to-[#08090b]/25"
+                      />
+                    </>
+                  )}
                   <div aria-hidden="true" className="absolute inset-0 bg-grid opacity-40" />
                   <div className="relative flex h-full flex-col justify-between">
                     <div className="flex items-center justify-between gap-4">
@@ -168,14 +183,26 @@ export default function CaseStudies() {
                 <div className="relative border-b border-white/10 bg-[#070a0f]">
                   <img
                     src={spotlight.image}
-                    alt="Chauffeur operations dashboard showing live bookings, a route map, upcoming jobs and compliance status."
+                    alt="Chauffeur and private-hire car outside an airport terminal."
+                    width={1799}
+                    height={773}
                     className="block h-auto w-full"
                     loading="lazy"
                   />
                   <div
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#08090b]/70 via-transparent to-transparent"
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#08090b]/85 via-[#08090b]/20 to-transparent"
                   />
+                  {spotlight.imageSecondary && (
+                    <img
+                      src={spotlight.imageSecondary}
+                      alt="Chauffeur operations dashboard showing bookings, compliance and invoicing."
+                      width={1200}
+                      height={675}
+                      loading="lazy"
+                      className="absolute bottom-5 right-5 z-10 hidden w-[38%] rounded-[10px] border border-white/15 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.9)] md:block lg:bottom-7 lg:right-7"
+                    />
+                  )}
                   <div className="absolute left-5 top-5 flex flex-wrap gap-2 md:left-7 md:top-7">
                     <span className="rounded-full border border-white/15 bg-black/55 px-3 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-white/70 backdrop-blur-md">
                       {spotlight.category}
@@ -290,43 +317,77 @@ export default function CaseStudies() {
               <Reveal key={study.slug} delay={index * 60}>
                 <article
                   id={study.slug}
-                  className="group glass card-lift flex h-full scroll-mt-28 flex-col p-6 md:p-7"
+                  className="group glass card-lift flex h-full scroll-mt-28 flex-col overflow-hidden"
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <span className="meta-label">{study.category}</span>
-                    {study.link && (
-                      <a
-                        href={study.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Visit ${study.title}`}
-                        className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/10 text-white/35 transition-all duration-300 hover:border-white/25 hover:text-white/80"
-                      >
-                        <ExternalLink size={13} strokeWidth={1.7} />
-                      </a>
-                    )}
-                  </div>
-
-                  <div className="mt-8 flex items-end justify-between gap-4">
-                    <h3 className="display-2">{study.title}</h3>
-                    {study.metric && (
-                      <span className="shrink-0 font-display text-[2.2rem] font-medium leading-none tracking-[-0.05em] text-white/85">
-                        {study.metric}
+                  {study.image && (
+                    <div className="relative aspect-[16/9] overflow-hidden border-b border-white/10 bg-[#07090d]">
+                      <img
+                        src={study.image}
+                        alt=""
+                        aria-hidden="true"
+                        loading="lazy"
+                        className="absolute inset-0 h-full w-full object-cover opacity-80 transition-all duration-700 ease-out group-hover:scale-[1.03] group-hover:opacity-90"
+                      />
+                      <div
+                        aria-hidden="true"
+                        className="absolute inset-0 bg-gradient-to-t from-[#08090b]/80 via-[#08090b]/20 to-transparent"
+                      />
+                      <span className="absolute left-5 top-5 rounded-full border border-white/15 bg-black/50 px-3 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-white/70 backdrop-blur-md">
+                        {study.category}
                       </span>
-                    )}
-                  </div>
-                  <p className="mt-2 text-[13px] text-white/48">{study.metricLabel}</p>
-                  <p className="body-copy mt-4 flex-1">{study.summary}</p>
+                      {study.link && (
+                        <a
+                          href={study.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Visit ${study.title}`}
+                          className="absolute right-4 top-5 grid h-8 w-8 place-items-center rounded-full border border-white/15 bg-black/40 text-white/60 backdrop-blur-md transition-all duration-300 hover:border-white/30 hover:text-white"
+                        >
+                          <ExternalLink size={13} strokeWidth={1.7} />
+                        </a>
+                      )}
+                    </div>
+                  )}
 
-                  <div className="mt-6 flex flex-wrap gap-1.5 border-t border-white/10 pt-5">
-                    {study.tech.map((tech) => (
-                      <span
-                        key={tech}
-                        className="rounded-[5px] border border-white/[0.08] bg-white/[0.02] px-2 py-1 font-mono text-[8.5px] uppercase tracking-[0.06em] text-white/32"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                  <div className="flex flex-1 flex-col p-6 md:p-7">
+                    {!study.image && (
+                      <div className="flex items-start justify-between gap-4">
+                        <span className="meta-label">{study.category}</span>
+                        {study.link && (
+                          <a
+                            href={study.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`Visit ${study.title}`}
+                            className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/10 text-white/35 transition-all duration-300 hover:border-white/25 hover:text-white/80"
+                          >
+                            <ExternalLink size={13} strokeWidth={1.7} />
+                          </a>
+                        )}
+                      </div>
+                    )}
+
+                    <div className="mt-7 flex items-end justify-between gap-4">
+                      <h3 className="display-3">{study.title}</h3>
+                      {study.metric && (
+                        <span className="shrink-0 font-display text-[2rem] font-medium leading-none tracking-[-0.05em] text-white/85">
+                          {study.metric}
+                        </span>
+                      )}
+                    </div>
+                    <p className="mt-2 text-[13px] text-white/48">{study.metricLabel}</p>
+                    <p className="body-copy mt-4 flex-1">{study.summary}</p>
+
+                    <div className="mt-6 flex flex-wrap gap-1.5 border-t border-white/10 pt-5">
+                      {study.tech.map((tech) => (
+                        <span
+                          key={tech}
+                          className="rounded-[5px] border border-white/[0.08] bg-white/[0.02] px-2 py-1 font-mono text-[8.5px] uppercase tracking-[0.06em] text-white/32"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </article>
               </Reveal>

@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import {
   ArrowUpRight,
   Check,
+  GraduationCap,
   HeartPulse,
   Landmark,
+  RadioTower,
   ShoppingBag,
   Truck,
 } from "lucide-react";
@@ -38,6 +40,8 @@ const industryIcons = {
   finance: Landmark,
   retail: ShoppingBag,
   logistics: Truck,
+  telecom: RadioTower,
+  education: GraduationCap,
 };
 
 export default function Home() {
@@ -56,12 +60,20 @@ export default function Home() {
       <section className="relative overflow-hidden pb-16 pt-36 sm:pt-40 lg:pb-20 lg:pt-44">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-grid opacity-70" />
-          <div className="absolute -right-[28%] top-[-12%] w-[105%] max-w-[1100px] opacity-65 sm:-right-[14%] sm:w-[80%] lg:right-[-2%] lg:top-[-16%] lg:w-[68%] lg:opacity-90">
-            <img
-              src="/art/hero-ribbon.svg"
-              alt=""
-              className="h-auto w-full animate-float-slow"
-            />
+          <div className="absolute -right-[28%] top-[-4%] w-[110%] max-w-[1100px] opacity-55 sm:-right-[14%] sm:top-[-12%] sm:w-[80%] sm:opacity-65 lg:right-[-2%] lg:top-[-16%] lg:w-[68%] lg:opacity-90">
+            <picture>
+              <source
+                media="(max-width: 639px)"
+                srcSet="/art/hero-ribbon-mobile.webp"
+              />
+              <img
+                src="/art/hero-ribbon.webp"
+                alt=""
+                width={1800}
+                height={772}
+                className="h-auto w-full animate-float-slow"
+              />
+            </picture>
           </div>
           <div className="absolute inset-0 bg-gradient-to-r from-[#08090b] via-[#08090b]/88 to-[#08090b]/10" />
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#08090b] to-transparent" />
@@ -445,25 +457,40 @@ export default function Home() {
             lead="We are not a general-purpose agency. These are the operations we know well enough to improve quickly."
           />
 
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {INDUSTRIES.map((industry, index) => {
               const Icon = industryIcons[industry.icon as keyof typeof industryIcons];
               return (
-                <Reveal key={industry.name} delay={index * 70}>
-                  <div className="group relative flex h-full flex-col overflow-hidden rounded-[14px] border border-white/10 bg-gradient-to-b from-white/[0.04] to-white/[0.01] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-white/20">
-                    <span className="grid h-10 w-10 place-items-center rounded-[9px] border border-white/10 bg-white/[0.035] text-ice/70 transition-colors duration-300 group-hover:border-ice/20 group-hover:text-ice">
-                      <Icon size={18} strokeWidth={1.5} />
-                    </span>
-                    <h3 className="display-4 mt-10">{industry.name}</h3>
-                    <p className="body-copy mt-3 flex-1">{industry.description}</p>
-                    <Link
-                      to="/services"
-                      className="mt-6 inline-flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.12em] text-white/35 transition-colors group-hover:text-white/70"
-                    >
-                      Explore
-                      <ArrowUpRight size={11} />
-                    </Link>
-                  </div>
+                <Reveal key={industry.name} delay={index * 60}>
+                  <Link
+                    to="/services"
+                    className="group relative flex aspect-[4/5] h-full flex-col justify-end overflow-hidden rounded-[14px] border border-white/10 transition-all duration-300 hover:-translate-y-1 hover:border-white/20"
+                  >
+                    <img
+                      src={industry.image}
+                      alt=""
+                      aria-hidden="true"
+                      loading="lazy"
+                      className="absolute inset-0 h-full w-full object-cover opacity-70 transition-all duration-700 ease-out group-hover:scale-[1.035] group-hover:opacity-80"
+                    />
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 bg-gradient-to-t from-[#07090d] via-[#07090d]/55 to-[#07090d]/10"
+                    />
+                    <div className="relative p-6">
+                      <span className="grid h-10 w-10 place-items-center rounded-[9px] border border-white/15 bg-black/30 text-ice/80 backdrop-blur-md transition-colors duration-300 group-hover:border-ice/30 group-hover:text-ice">
+                        <Icon size={18} strokeWidth={1.5} />
+                      </span>
+                      <h3 className="display-4 mt-8">{industry.name}</h3>
+                      <p className="mt-3 text-[13.5px] leading-[1.6] text-white/55">
+                        {industry.description}
+                      </p>
+                      <span className="mt-6 inline-flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.12em] text-white/40 transition-colors group-hover:text-white/75">
+                        Explore
+                        <ArrowUpRight size={11} />
+                      </span>
+                    </div>
+                  </Link>
                 </Reveal>
               );
             })}

@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Original generated image sources (optimized WebP copies live in public/art)
+timesqpics/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

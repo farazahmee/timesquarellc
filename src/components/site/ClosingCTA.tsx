@@ -11,10 +11,12 @@ export default function ClosingCTA() {
         <Reveal>
           <div className="noise relative overflow-hidden rounded-[20px] border border-white/10 bg-[#0b0d11]">
             <img
-              src="/art/cta-topography.svg"
+              src="/art/cta-waves.webp"
               alt=""
               aria-hidden="true"
-              className="absolute inset-0 h-full w-full object-cover opacity-80"
+              width={1599}
+              height={900}
+              className="absolute inset-0 h-full w-full object-cover opacity-70"
               loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#08090b] via-[#08090b]/85 to-transparent" />

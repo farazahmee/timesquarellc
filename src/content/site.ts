@@ -62,7 +62,7 @@ export const CAPABILITIES = [
       "We map the repetitive work inside your team — approvals, data entry, reporting, follow-ups — and replace it with pipelines that run unattended.",
     tags: ["Workflow mapping", "Human in the loop", "Monitoring"],
     href: "/services#automation",
-    art: "/art/cap-automation.svg",
+    art: "/art/cap-automation.webp",
   },
   {
     number: "02",
@@ -71,7 +71,7 @@ export const CAPABILITIES = [
       "Support, qualification, and research agents grounded in your own documents and systems. Low-confidence answers hand off to a person, not a guess.",
     tags: ["RAG", "Tool use", "Escalation"],
     href: "/services#agents",
-    art: "/art/cap-agents.svg",
+    art: "/art/cap-agents.webp",
   },
   {
     number: "03",
@@ -80,7 +80,7 @@ export const CAPABILITIES = [
       "Production systems built around how your business actually operates — not a SaaS product with your name on the login screen.",
     tags: ["Python", "React", "Cloud"],
     href: "/services#software",
-    art: "/art/cap-software.svg",
+    art: "/art/cap-software.webp",
   },
   {
     number: "04",
@@ -89,7 +89,7 @@ export const CAPABILITIES = [
       "Customer-facing apps and conversion-focused sites built for speed, search visibility, and clean analytics — so you can see what earns revenue.",
     tags: ["Next.js", "Mobile", "Analytics"],
     href: "/services#web",
-    art: "/art/cap-web.svg",
+    art: "/art/cap-web.webp",
   },
 ] as const;
 
@@ -291,26 +291,44 @@ export const INDUSTRIES = [
   {
     name: "Healthcare",
     icon: "health",
+    image: "/art/industry-health.webp",
     description:
       "Clinical coordination, patient intake, and document-heavy admin where accuracy is not optional.",
   },
   {
     name: "Financial services",
     icon: "finance",
+    image: "/art/industry-finance.webp",
     description:
       "Validation, reporting, and compliance workflows with a complete audit trail.",
   },
   {
     name: "Retail & e-commerce",
     icon: "retail",
+    image: "/art/industry-retail.webp",
     description:
       "Order operations, merchandising, and customer support that scale without adding headcount.",
   },
   {
     name: "Logistics",
     icon: "logistics",
+    image: "/art/industry-logistics.webp",
     description:
       "Scheduling, exception handling, and supplier communication across distributed teams.",
+  },
+  {
+    name: "Telecommunications",
+    icon: "telecom",
+    image: "/art/industry-telecom.webp",
+    description:
+      "Network operations, field scheduling, and customer support across distributed infrastructure.",
+  },
+  {
+    name: "Education",
+    icon: "education",
+    image: "/art/industry-education.webp",
+    description:
+      "Enrolment, learner support, and back-office workflows that free teaching teams to teach.",
   },
 ] as const;
 
@@ -475,6 +493,7 @@ export type CaseStudy = {
   highlights?: string[];
   note?: string;
   image?: string;
+  imageSecondary?: string;
   link?: string;
   featured?: boolean;
   spotlight?: boolean;
@@ -493,6 +512,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       "We designed and built a real-time surgical collaboration platform — a custom AI-powered solution for healthcare teams. Using WebSocket and Redis for live data sync, we delivered a suggestion module that improved surgical list accuracy by 35% and team efficiency by 50%. Enterprise-grade security with OAuth 2.0, JWT authentication, and role-based access control reduced unauthorised access by 80%.",
     tech: ["WebSocket", "Redis", "OAuth 2.0", "JWT"],
     results: ["35% accuracy increase", "50% efficiency improvement", "80% security improvement"],
+    image: "/art/case-health.webp",
     link: "https://eg-app-46443-staging.botics.co/",
     featured: true,
   },
@@ -508,6 +528,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       "For RevelTV, we delivered automation and platform engineering for a nationwide digital signage network. The system supports real-time content operations, distributed deployment workflows, and analytics visibility at scale, helping serve 3,000+ clients across automotive, corporate, and retail environments.",
     tech: ["Python", "Django", "PostgreSQL", "Vue.js", "AWS", "Docker", "Kubernetes"],
     results: ["3,000+ clients served", "Multi-industry solutions", "Nationwide presence"],
+    image: "/art/case-digital.webp",
     link: "https://reveltv.com/",
   },
   {
@@ -522,6 +543,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       "For this finance platform, we built AI automation that streamlines tax and accounting workflows. The platform combines LLM guidance, intelligent document validation, and analytics dashboards that help teams make faster, compliant financial decisions.",
     tech: ["Django REST Framework", "Python", "AWS"],
     results: ["AI-powered tax guidance", "Document validation", "Financial insights"],
+    image: "/art/case-finance.webp",
     link: "https://www.simpla.ai/",
   },
   {
@@ -536,6 +558,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       "We delivered ChatGPT integration for a coaching platform, combining AI strategy with custom full-stack execution. The solution included automated email dispatch with Celery, Google Calendar scheduling sync, and secure data migration from Firebase to PostgreSQL.",
     tech: ["Python", "FastAPI", "React.js", "jQuery"],
     results: ["AI-powered communication", "Automated scheduling", "Seamless data migration"],
+    image: "/art/case-education.webp",
     link: "https://beta.a-plancoaching.com/",
   },
   {
@@ -550,6 +573,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       "This retail analytics platform transformed existing cameras into smart sensors for business teams. We implemented machine learning pipelines for real-time traffic analysis, demographic insights, and area utilisation reporting.",
     tech: ["React.js", "Node.js", "Express.js", "MongoDB"],
     results: ["Real-time analytics", "Customer behaviour tracking", "Retail optimisation"],
+    image: "/art/case-ecommerce.webp",
     link: "https://www.adlytic.ai/",
   },
   {
@@ -563,6 +587,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       "OMNO AI required scalable LLM integration and advanced data workflows across NLP, computer vision, and predictive systems. We supported platform architecture and delivery, focused on practical, production-ready AI.",
     tech: ["Next.js", "Ruffle", "React", "Cloudflare"],
     results: ["NLP solutions", "Computer vision", "Custom AI tools"],
+    image: "/art/case-omno.webp",
   },
   {
     slug: "churn-prediction",
@@ -575,6 +600,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       "This churn prediction project combined feature engineering, model training automation, and orchestration with Apache Airflow. We built a repeatable ML pipeline with reporting and alerts that improved retention decision-making.",
     tech: ["Apache Airflow", "Pandas", "NumPy", "Wandb", "Slack"],
     results: ["Automated predictions", "Pipeline automation", "Slack notifications"],
+    image: "/art/case-churn.webp",
   },
   {
     slug: "chauffeur-operations",
@@ -612,7 +638,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     note:
       "A lighter alternative to the parts of iCabbi teams were not using — shaped around how private-hire operators actually dispatch, stay compliant and invoice.",
-    image: "/art/project-chauffeur.svg",
+    image: "/art/project-chauffeur.webp",
+    imageSecondary: "/art/project-chauffeur-dashboard.webp",
     spotlight: true,
   },
 ];

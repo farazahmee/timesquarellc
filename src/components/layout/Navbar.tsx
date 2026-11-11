@@ -205,7 +205,7 @@ export default function Navbar() {
                               className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_0%,rgba(172,206,239,0.14),transparent_58%)]"
                             />
                             <img
-                              src="/art/cap-automation.svg"
+                              src="/art/cap-automation.webp"
                               alt=""
                               aria-hidden="true"
                               className="pointer-events-none absolute -top-10 -right-12 w-40 opacity-35"
